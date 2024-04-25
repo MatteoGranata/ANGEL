@@ -36,7 +36,7 @@ export default {
         })
         .catch(error => {
           console.log(error.response.data.message)
-          return console.log(error,'bella raga')
+          return console.log(error)
         
     });
     }
