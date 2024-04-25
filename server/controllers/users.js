@@ -9,17 +9,17 @@ export const getAllUsers = async (req, res) => {
         restart.status(404).json({ message: error.message })
     }
 }
-export const getUserByID = async (req, res) => {
-    const { id } = req.params
+// export const getUserByID = async (req, res) => {
+//     const { id } = req.params
 
-    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).json({ message: 'id non conforme con mongo' })
-    try {
-        const user = await User.findById(id)
-        res.status(200).json(user)
-    } catch (error) {
-        res.status(404).json({ message: error.message })
-    }
-}
+//     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).json({ message: 'id non conforme con mongo' })
+//     try {
+//         const user = await User.findById(id)
+//         res.status(200).json(user)
+//     } catch (error) {
+//         res.status(404).json({ message: error.message })
+//     }
+// }
 export const insertUser = async (req, res) => {
     const newUser = new User(req.body)
 
@@ -50,6 +50,19 @@ export const updateUserByID = async (req, res) => {
     try {
         const user = await User.findByIdAndUpdate(id, data,{new: true})
         res.status(200).json(user)
+    } catch (error) {
+        res.status(404).json({ message: error.message })
+    }
+}
+export const getHomeUser = async (req, res) => {
+    const { username } = req.params
+    let params = {}
+    try { //Check if the 'username' parameter exists
+        if (username) {
+            params.username = { $eq: username }; // Filter orders where includes the specified 'username' Id
+        }
+        const homepage = await User.find(params)
+        res.status(200).json(homepage)
     } catch (error) {
         res.status(404).json({ message: error.message })
     }
