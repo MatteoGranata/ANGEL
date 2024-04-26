@@ -10,20 +10,23 @@
         </form>
     </div>
     <div class="post-container">
-    <ul v-if="userPosts.length > 0">
-      <li v-for="post in userPosts" :key="post._id">
-        <textarea v-model="post.content" name="post" id="post" cols="30" rows="5">{{ post.content }}</textarea>
-        <button @click="updatePost(post._id)">update Post</button>
-        <button @click="deletePost(post._id)">delete Post</button>
-      </li>
-    </ul>
-    <p v-else>No posts found.</p>
-  </div>
-
+        <ul v-if="userPosts.length > 0">
+            <li v-for="post in userPosts" :key="post._id">
+                <textarea v-model="post.content" name="post" id="post" cols="30" rows="5">{{ post.content }}</textarea>
+                <button @click="updatePost(post._id)">update Post</button>
+                <button @click="deletePost(post._id)">delete Post</button>
+            </li>
+        </ul>
+        <p v-else>No posts found.</p>
+    </div>
+    <div>
+        <button @click="logout">LOGOUT</button>
+    </div>
 </template>
 
 <script>
 
+import router from '@/router';
 import axios from 'axios';
 export default {
     data() {
@@ -77,28 +80,28 @@ export default {
             }
         },
         async updatePost(postId) {
-    try {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        console.error('No token found');
-        return;
-      }
+            try {
+                const token = localStorage.getItem('token');
+                if (!token) {
+                    console.error('No token found');
+                    return;
+                }
 
-      const postToUpdate = this.userPosts.find(post => post._id === postId);
-      if (!postToUpdate) {
-        console.error('Post to update not found');
-        return;
-      }
+                const postToUpdate = this.userPosts.find(post => post._id === postId);
+                if (!postToUpdate) {
+                    console.error('Post to update not found');
+                    return;
+                }
 
-      const response = await axios.patch(`/home/post/${postId}`, { content: postToUpdate.content }, {
-        headers: { Authorization: `bearer ${token}` },
-      });
+                const response = await axios.patch(`/home/post/${postId}`, { content: postToUpdate.content }, {
+                    headers: { Authorization: `bearer ${token}` },
+                });
 
-      console.log('Post updated:', response.data);
-    } catch (error) {
-      console.error(error);
-    }
-  },
+                console.log('Post updated:', response.data);
+            } catch (error) {
+                console.error(error);
+            }
+        },
         async deletePost(postId) {
             try {
                 const token = localStorage.getItem('token'); // Get token from local storage
@@ -116,6 +119,11 @@ export default {
             } catch (error) {
                 console.error(error)
             }
+        },
+        logout() {
+            localStorage.clear('token')
+            console.log('logout effettuato con successo')
+            router.push('/login')
         }
 
     }
