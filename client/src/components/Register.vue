@@ -32,7 +32,7 @@ export default {
           // Handle successful response
           if(response.data.status == 'okay'){
             this.$router.push('/login');
-            console.log(response.data);
+            console.log('registration was successful');
           }else{
             return console.error(response.data.message)
           }

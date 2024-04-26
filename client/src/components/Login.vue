@@ -29,7 +29,7 @@ export default {
       axios.post("/auth/login", { username: this.username, password: this.password }) // POST request
         .then(response => {
           // Handle successful response
-          console.log('User logged:', response.data);
+          console.log('User logged');
           this.$router.push('/post');
           localStorage.setItem('token', response.data.data);
           
