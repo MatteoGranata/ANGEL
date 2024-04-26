@@ -30,7 +30,7 @@ export default {
         .then(response => {
           // Handle successful response
           console.log('User logged:', response.data);
-          this.$router.push('/test');
+          this.$router.push('/post');
           localStorage.setItem('token', response.data.data);
           
         })

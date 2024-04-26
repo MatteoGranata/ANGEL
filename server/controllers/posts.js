@@ -30,12 +30,20 @@ export const getPosts = async (req, res) => {
     res.status(200).json({ posts });
 };
 
-// const updatePost = async (req, res) => {
-//     const { content } = req.body;
-//     const postId = req.params.id;
-//     const userId = req.user.userId;
+export const updatePost = async (req, res) => {
+    const { id } = req.params
+    const data = { ...req.body }
 
-// }
+    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).json({ message: 'id non conforme con mongo' })
+    try {
+        const post = await Post.findByIdAndUpdate(id, data, { new: true })
+        res.status(200).json(post)
+    } catch (error) {
+        res.status(404).json({ message: error.message })
+    }
+
+
+}
 export const deletePost = async (req, res) => {
     const { id } = req.params
 
