@@ -3,15 +3,13 @@ import Register from '../components/Register.vue'
 import Login from '../components/Login.vue'
 import Homepage from '../views/Homepage.vue'
 
-const user = localStorage.getItem('username')
-
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: `/homepage`,
-      name: Homepage,
-      component: Homepage,
+      path: '/homepage',
+      name: 'homepage',
+      component: Homepage
     },
     {
       path: '/register',

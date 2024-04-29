@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
     <div class="login-form">
         <h2>POST</h2>
         <form @submit.prevent="createPost">
@@ -120,4 +120,4 @@ export default {
     
     }
 }
-</script>
+</script> -->
