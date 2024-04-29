@@ -1,11 +1,18 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Register from '../components/Register.vue'
 import Login from '../components/Login.vue'
-import Post from '../views/Post.vue'
+import Homepage from '../views/Homepage.vue'
+
+const user = localStorage.getItem('username')
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    {
+      path: `/homepage`,
+      name: Homepage,
+      component: Homepage,
+    },
     {
       path: '/register',
       name: 'register',
@@ -16,11 +23,6 @@ const router = createRouter({
       name: 'login',
       component: Login
     },
-    {
-      path: '/post',
-      component: Post,
-    },
-
   ]
 })
 

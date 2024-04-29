@@ -4,11 +4,11 @@ import { createPost, getPosts, deletePost, updatePost } from '../controllers/pos
 
 const router = express.Router()
 
-router.post('/post', createPost);
-router.get('/post', getPosts);
-// router.get('/ideas/:id', getPostById);
-router.patch('/post/:id', updatePost);
-router.delete('/post/:id', deletePost);
+router.post('/', createPost);
+router.get('/', getPosts);
+// router.get('/:id', getPostById);
+router.patch('/:id', updatePost);
+router.delete('/:id', deletePost);
 
 
 export default router

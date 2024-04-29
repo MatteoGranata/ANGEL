@@ -54,16 +54,3 @@ export const updateUserByID = async (req, res) => {
         res.status(404).json({ message: error.message })
     }
 }
-export const getHomeUser = async (req, res) => {
-    const { username } = req.params
-    let params = {}
-    try { //Check if the 'username' parameter exists
-        if (username) {
-            params.username = { $eq: username }; // Filter orders where includes the specified 'username' Id
-        }
-        const homepage = await User.find(params)
-        res.status(200).json(homepage)
-    } catch (error) {
-        res.status(404).json({ message: error.message })
-    }
-}

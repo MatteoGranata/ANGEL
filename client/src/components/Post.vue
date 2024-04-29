@@ -19,14 +19,11 @@
         </ul>
         <p v-else>No posts found.</p>
     </div>
-    <div>
-        <button @click="logout">LOGOUT</button>
-    </div>
+   
 </template>
 
 <script>
 
-import router from '@/router';
 import axios from 'axios';
 export default {
     data() {
@@ -47,7 +44,7 @@ export default {
                     console.error('No token found');
                     return;
                 }
-                const response = await axios.get('/home/post', {
+                const response = await axios.get('/post', {
                     headers: { Authorization: `Bearer ${token}` },
                 });
 
@@ -67,7 +64,7 @@ export default {
                     console.error('No token found');
                     return;
                 }
-                const response = await axios.post('/home/post', { content: this.content }, {
+                const response = await axios.post('/post', { content: this.content }, {
                     headers: { Authorization: `bearer ${token}` },
                 });
                 console.log('Post added:', response.data);
@@ -93,7 +90,7 @@ export default {
                     return;
                 }
 
-                const response = await axios.patch(`/home/post/${postId}`, { content: postToUpdate.content }, {
+                const response = await axios.patch(`/post/${postId}`, { content: postToUpdate.content }, {
                     headers: { Authorization: `bearer ${token}` },
                 });
 
@@ -110,7 +107,7 @@ export default {
                     console.error('No token found');
                     return;
                 }
-                const response = await axios.delete(`/home/post/${postId}`, {
+                const response = await axios.delete(`/post/${postId}`, {
                     headers: { Authorization: `bearer ${token}` },
 
                 });
@@ -120,12 +117,7 @@ export default {
                 console.error(error)
             }
         },
-        logout() {
-            localStorage.clear('token')
-            console.log('logout effettuato con successo')
-            router.push('/login')
-        }
-
+    
     }
 }
 </script>

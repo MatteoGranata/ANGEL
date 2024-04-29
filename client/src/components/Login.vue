@@ -1,7 +1,7 @@
 <template>
   <div class="login-form">
     <h2>Login</h2>
-    <form @submit.prevent="register">
+    <form @submit.prevent="login">
       <div class="form-group">
         <label for="username">Username:</label>
         <input type="text" id="username" v-model="username" required />
@@ -16,6 +16,7 @@
 </template>
 
 <script>
+
 import axios from 'axios';
 export default {
   data() {
@@ -25,21 +26,23 @@ export default {
     };
   },
   methods: {
-    async register() {
-      axios.post("/auth/login", { username: this.username, password: this.password }) // POST request
-        .then(response => {
-          // Handle successful response
-          console.log('User logged');
-          this.$router.push('/post');
-          localStorage.setItem('token', response.data.data);
-          
-        })
-        .catch(error => {
-          console.log(error.response.data.message)
-          return console.log(error)
-        
-    });
+    async login() {
+      try {
+        const response = await axios.post("/auth/login", { username: this.username, password: this.password });
+
+        console.log('User logged:', response.data);
+        const user = this.username
+        localStorage.setItem('token', response.data.data);
+        localStorage.setItem('username', user)
+
+        await this.$router.push(`/homepage`)
+
+      } catch (error) {
+        console.log(error.response.data.message)
+        return console.log(error)
+      }
     }
+
   }
 }
 </script>
