@@ -12,12 +12,14 @@ const timerSchema = new mongoose.Schema(
     },
     tempo: {
       type: Number,
+      default: 0,
     },
     attivo: {
       type: Boolean,
     },
     intervallo: {
       type: Number,
+      default: 1000,
     },
   },
   { timestamps: true }

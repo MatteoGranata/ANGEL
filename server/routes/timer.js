@@ -4,8 +4,8 @@ const router = express.Router()
 
 router.post('/', createTimer);
 router.get('/', getTimer);
-router.put('/:id/avvia',startTimer);
-router.put('/:id/arresta', stopTimer)
+router.patch('/:id/avvia',startTimer);
+router.patch('/:id/arresta', stopTimer)
 router.put('/:id/reset', resetTimer);
 // router.delete('/:id', delete)
 
