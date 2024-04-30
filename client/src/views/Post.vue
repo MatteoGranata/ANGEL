@@ -19,9 +19,7 @@
         </ul>
         <p v-else>No posts found.</p>
     </div>
-    <div>
-        <button @click="logout">LOGOUT</button>
-    </div>
+ 
 </template>
 
 <script>
@@ -50,7 +48,6 @@ export default {
                 const response = await axios.get('/post/', {
                     headers: { Authorization: `Bearer ${token}` },
                 });
-
                 // Update the assignment based on your actual API response structure
                 this.userPosts = response.data.posts;
 
@@ -60,7 +57,6 @@ export default {
         },
         async createPost() {
             try {
-
                 const token = localStorage.getItem('token'); // Get token from local storage
                 if (!token) {
                     // Handle no token case (e.g., redirect to login)
@@ -120,11 +116,7 @@ export default {
                 console.error(error)
             }
         },
-        logout() {
-            localStorage.clear('token')
-            console.log('logout effettuato con successo')
-            router.push('/login')
-        }
+ 
 
     }
 }

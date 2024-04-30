@@ -27,7 +27,6 @@ export const getAllPasswords = async (req, res) => {
     restart.status(404).json({ message: error.message });
   }
 };
-
 export const updatePassword = async (req, res) => {
   const { id } = req.params;
   const data = { ...req.body };
@@ -36,7 +35,7 @@ export const updatePassword = async (req, res) => {
     return res.status(404).json({ message: "id non conforme con mongo" });
   try {
     const password = await Password.findByIdAndUpdate(id, data, { new: true });
-    res.status(200).json(password);
+    res.status(200).json({ password });
   } catch (error) {
     res.status(404).json({ message: error.message });
   }

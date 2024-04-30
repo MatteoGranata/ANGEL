@@ -8,6 +8,7 @@ import usersRoutes from './routes/users.js'
 import authRoutes from './routes/auth.js'
 import postRoutes from './routes/post.js'
 import passwordRoutes from './routes/password.js'
+import timerRoutes from './routes/timer.js'
 
 import { authenticateToken } from './middlewares/auth.js'
 
@@ -23,6 +24,7 @@ app.use('/users',authenticateToken, usersRoutes)
 app.use('/auth', authRoutes)
 app.use('/post',authenticateToken, postRoutes)
 app.use('/password',authenticateToken, passwordRoutes)
+app.use('/timer',authenticateToken, timerRoutes)
 
 
 // app.get('/', (req, res) => res.send("benvenuto nella homepage"))

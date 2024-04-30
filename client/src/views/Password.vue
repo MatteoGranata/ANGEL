@@ -1,25 +1,27 @@
-<!-- <template>
+<template>
     <div class="login-form">
-        <h2>POST</h2>
-        <form @submit.prevent="createPost">
+        <h2>PASSWORD</h2>
+        <form @submit.prevent="createPassword">
             <div class="form-group">
-                <label for="post">content:</label>
-                <input type="text" id="post" v-model="content" required />
+                <label for="password">content:</label>
+                <input type="password" id="password" v-model="content" required />
             </div>
-            <button type="submit">add post</button>
+            <button type="submit">add password</button>
         </form>
     </div>
-    <div class="post-container">
-        <ul v-if="userPosts.length > 0">
-            <li v-for="post in userPosts" :key="post._id">
-                <textarea v-model="post.content" name="post" id="post" cols="30" rows="5">{{ post.content }}</textarea>
-                <button @click="updatePost(post._id)">update Post</button>
-                <button @click="deletePost(post._id)">delete Post</button>
+    <div class="password-container">
+        <ul v-if="userPasswords.length > 0">
+            <li v-for="password in userPasswords" :key="password._id">
+                <textarea v-model="password.content" name="password" id="password" cols="30"
+                    rows="5">{{ password.content }}</textarea>
+                <button @click="updatePassword(password._id)">update Password</button>
+                <button @click="deletePassword(password._id)">delete Password</button>
             </li>
+
         </ul>
-        <p v-else>No posts found.</p>
+        <p v-else>No password found.</p>
     </div>
-   
+
 </template>
 
 <script>
@@ -29,54 +31,53 @@ export default {
     data() {
         return {
             content: '',
-            userPosts: [],
+            userPasswords: [],
         };
     },
     mounted() {
-        this.fetchPosts();
+        this.fetchPassword();
     },
-    fetchPosts: {},
+    fetchPassword: {},
     methods: {
-        async fetchPosts() {
+        async fetchPassword() {
             try {
                 const token = localStorage.getItem('token');
                 if (!token) {
                     console.error('No token found');
                     return;
                 }
-                const response = await axios.get('/post', {
+                const response = await axios.get('/password/', {
                     headers: { Authorization: `Bearer ${token}` },
                 });
-
+                console.log(response.data)
                 // Update the assignment based on your actual API response structure
-                this.userPosts = response.data.posts;
+                this.userPasswords = response.data.passwords;
 
             } catch (error) {
                 console.error(error);
             }
         },
-        async createPost() {
+        async createPassword(conent) {
             try {
-
                 const token = localStorage.getItem('token'); // Get token from local storage
                 if (!token) {
                     // Handle no token case (e.g., redirect to login)
                     console.error('No token found');
                     return;
                 }
-                const response = await axios.post('/post', { content: this.content }, {
+                const response = await axios.post('/password', { content: this.content }, {
                     headers: { Authorization: `bearer ${token}` },
                 });
-                console.log('Post added:', response.data);
+                console.log('Password added:', response.data);
 
-                this.userPosts.push(response.data.post)
+                this.userPasswords.push(response.data.password)
                 this.content = ''
 
             } catch (error) {
                 console.error(error);
             }
         },
-        async updatePost(postId) {
+        async updatePassword(passwordId) {
             try {
                 const token = localStorage.getItem('token');
                 if (!token) {
@@ -84,22 +85,22 @@ export default {
                     return;
                 }
 
-                const postToUpdate = this.userPosts.find(post => post._id === postId);
-                if (!postToUpdate) {
-                    console.error('Post to update not found');
+                const passwordToUpdate = this.userPasswords.find(password => password._id === passwordId);
+                if (!passwordToUpdate) {
+                    console.error('Password to update not found');
                     return;
                 }
 
-                const response = await axios.patch(`/post/${postId}`, { content: postToUpdate.content }, {
+                const response = await axios.patch(`/password/${passwordId}`, { content: passwordToUpdate.content }, {
                     headers: { Authorization: `bearer ${token}` },
                 });
 
-                console.log('Post updated:', response.data);
+                console.log('Password updated:', response.data);
             } catch (error) {
                 console.error(error);
             }
         },
-        async deletePost(postId) {
+        async deletePassword(passwordId) {
             try {
                 const token = localStorage.getItem('token'); // Get token from local storage
                 if (!token) {
@@ -107,17 +108,17 @@ export default {
                     console.error('No token found');
                     return;
                 }
-                const response = await axios.delete(`/post/${postId}`, {
+                const response = await axios.delete(`/password/${passwordId}`, {
                     headers: { Authorization: `bearer ${token}` },
 
                 });
-                console.log('Post removed:', response.data);
-                this.userPosts = this.userPosts.filter(post => post._id !== postId);
+                console.log('Password removed:', response.data);
+                this.userPasswords = this.userPasswords.filter(password => password._id !== passwordId);
             } catch (error) {
                 console.error(error)
             }
         },
-    
+
     }
 }
-</script> -->
+</script>
