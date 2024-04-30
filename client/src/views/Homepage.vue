@@ -2,6 +2,7 @@
     <main>
         <Post />
         <Password />
+        <Timer />
     </main>
     <div>
         <button @click="logout">LOGOUT</button>
@@ -11,6 +12,7 @@
 <script setup>
 import Post from './Post.vue'
 import Password from './Password.vue'
+import Timer from './Timer.vue'
 
 </script>
 

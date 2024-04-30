@@ -29,23 +29,29 @@ export const getTimer = async (req, res) => {
 };
 export const startTimer = async (req, res) => {
   const { id } = req.params;
-  const timer = await Timer.findById(id);
-  if (!timer) {
-    return res.status(404).send("Cronometro non trovato");
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).json({ message: "id non conforme con mongo" });
+  try {
+    const timer = await Timer.findById(id);
+    timer.attivo = true;
+    await timer.save();
+    res.status(200).json(timer);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
   }
-  timer.attivo = true;
-  await timer.save();
-  res.json(timer);
 };
 export const stopTimer = async (req, res) => {
   const { id } = req.params;
-  const timer = await Timer.findById(id);
-  if (!timer) {
-    return res.status(404).send("Cronometro non trovato");
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).json({ message: "id non conforme con mongo" });
+  try {
+    const timer = await Timer.findById(id);
+    timer.attivo = false;
+    await timer.save();
+    res.status(200).json(timer);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
   }
-  timer.attivo = false;
-  await timer.save();
-  res.json(timer);
 };
 export const resetTimer = async (req, res) => {
   const { id } = req.params;
