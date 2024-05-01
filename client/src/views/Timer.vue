@@ -9,23 +9,15 @@
             <button type="submit">add post</button>
         </form>
     </div>
-    <div>
-        <!-- <h2>{{ timer.nome }}</h2> -->
-        <!-- <p>Tempo: {{ formatTime(timer.tempo) }}</p> -->
-        <!-- <button v-if="!timer.attivo" @click="startTimer">Avvia</button> -->
-        <!-- <button v-if="timer.attivo" @click="stopTimer">Arresta</button> -->
-
-
-        <!-- <button @click="resetTimer">Reset</button> -->
-        <!-- <button @click="deleteTimer">Elimina</button> -->
-    </div>
     <div class="timer-container">
         <ul v-if="userTimers">
             <li v-for="timer in userTimers" :key="timer._id">
                 for: {{ timer.nome }} <br>
                 Tempo: {{ formatTime(timer.tempo) }}
-                <button v-if="status" @click="startTimer(timer._id)">Avvia</button>
-                <button v-else @click="stopTimer(timer._id)">Arresta</button>
+                <button v-if="!timer.attivo" @click="startTimer(timer._id)">Avvia</button>
+                <button v-if="timer.attivo" @click="stopTimer(timer._id)">Arresta</button>
+                <button  @click="delteTimer(timer._id)">Elimina</button>
+                <button v-if="timer.tempo != 0" @click="resetTimer(timer._id)">Reset Timer</button>
             </li>
         </ul>
         <p v-else>No posts found.</p>
@@ -42,7 +34,7 @@ export default {
             timer: null,
             intervalId: null,
             userTimers: [],
-            status: true,
+            status: '',
         };
     },
     mounted() {
@@ -90,7 +82,7 @@ export default {
                 console.log('timer added:', response.data);
 
                 this.userTimers.push(response.data.timer)
-                this.name = ''
+                this.nome = ''
 
             } catch (error) {
                 console.error(error);
@@ -120,7 +112,7 @@ export default {
                 }, this.timer.intervallo);
 
                 console.log('timer start:', postToUpdate);
-                this.status = false
+                this.timer.attivo = true
             } catch (error) {
                 console.error(error);
             }
@@ -148,9 +140,51 @@ export default {
                 // Clear the interval to stop updating the timer
                 clearInterval(this.intervalId);
                 this.intervalId = null;
-                this.status = true
+                this.timer.attivo = false
 
+            } catch (error) {
+                console.error(error)
+            }
+        },
+        async resetTimer(timerId){
+            try {
+                const token = localStorage.getItem('token'); // Get token from local storage
+                if (!token) {
+                    // Handle no token case (e.g., redirect to login)
+                    console.error('No token found');
+                    return;
+                }
+                const postToUpdate = this.userTimers.find(timers => timers._id === timerId);
+                if (!postToUpdate) {
+                    console.error('Post to update not found');
+                    return;
+                }
+                const response = await axios.put(`/timer/${timerId}/reset`, { tempo: postToUpdate.tempo }, {
+                    headers: { Authorization: `bearer ${token}` },
 
+                });
+                this.timer = postToUpdate
+                postToUpdate.tempo = 0
+                console.log('timer reset:', response.data);
+
+            } catch (error) {
+                console.error(error)
+            }
+        },
+        async delteTimer(timerId){
+            try {
+                const token = localStorage.getItem('token'); // Get token from local storage
+                if (!token) {
+                    // Handle no token case (e.g., redirect to login)
+                    console.error('No token found');
+                    return;
+                }
+                const response = await axios.delete(`/timer/${timerId}`, {
+                    headers: { Authorization: `bearer ${token}` },
+
+                });
+                console.log('Timer removed:', response.data);
+                this.userTimers = this.userTimers.filter(timer => timer._id !== timerId);
             } catch (error) {
                 console.error(error)
             }

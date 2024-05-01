@@ -35,6 +35,7 @@ export const startTimer = async (req, res) => {
     return res.status(404).json({ message: "id non conforme con mongo" });
   try {
     const timer = await Timer.findByIdAndUpdate(id, data, { new: true });
+    timer.attivo = true;
     res.status(200).json(timer);
   } catch (error) {
     res.status(404).json({ message: error.message });
@@ -47,6 +48,7 @@ export const stopTimer = async (req, res) => {
     return res.status(404).json({ message: "id non conforme con mongo" });
   try {
     const timer = await Timer.findByIdAndUpdate(id, data, { new: true });
+    timer.attivo = false;
     res.status(200).json(timer);
   } catch (error) {
     res.status(404).json({ message: error.message });
@@ -67,3 +69,15 @@ export const resetTimer = async (req, res) => {
     return res.status(409).json({ message: error.message });
   }
 };
+export const deleteTimer = async(req,res)=>{
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).json({ message: "id non conforme con mongo" });
+  try {
+    await Timer.findByIdAndDelete(id);
+    res.status(200).json({ message: "timer eliminato con successo" });
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+}
