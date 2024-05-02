@@ -16,7 +16,7 @@
                 Tempo: {{ formatTime(timer.tempo) }}
                 <button v-if="!timer.attivo" @click="startTimer(timer._id)">Avvia</button>
                 <button v-if="timer.attivo" @click="stopTimer(timer._id)">Arresta</button>
-                <button  @click="delteTimer(timer._id)">Elimina</button>
+                <button @click="delteTimer(timer._id)">Elimina</button>
                 <button v-if="timer.tempo != 0" @click="resetTimer(timer._id)">Reset Timer</button>
             </li>
         </ul>
@@ -31,8 +31,6 @@ export default {
     data() {
         return {
             nome: '',
-            timer: null,
-            intervalId: null,
             userTimers: [],
             status: '',
         };
@@ -47,10 +45,8 @@ export default {
             const minutes = Math.floor((milliseconds % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((milliseconds % (1000 * 60)) / 1000);
 
-            // Use template literal for cleaner string formatting
-            return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            return `${hours.toString().padStart(2, '0')}h ${minutes.toString().padStart(2, '0')}m ${seconds.toString().padStart(2, '0')}s`;
         },
-
         async fetchPosts() {
             try {
                 const token = localStorage.getItem('token');
@@ -96,23 +92,21 @@ export default {
                     console.error('No token found');
                     return;
                 }
-                const postToUpdate = this.userTimers.find(timers => timers._id === timerId);
-                if (!postToUpdate) {
-                    console.error('Post to update not found');
+                const timerToUpdate = this.userTimers.find(timer => timer._id === timerId);
+                if (!timerToUpdate) {
+                    console.error('Timer to start not found');
                     return;
                 }
-                const response = await axios.patch(`timer/${timerId}/avvia`, { tempo: postToUpdate.tempo }, {
+
+                const response = await axios.patch(`/timer/${timerId}/avvia`, { tempo: timerToUpdate.tempo }, {
                     headers: { Authorization: `bearer ${token}` },
                 });
+                console.log('timer start:', response.data);
 
-                this.timer = postToUpdate;
-                // Start an interval to update the timer display
+                timerToUpdate.attivo = true;
                 this.intervalId = setInterval(() => {
-                    this.timer.tempo += this.timer.intervallo;
-                }, this.timer.intervallo);
-
-                console.log('timer start:', postToUpdate);
-                this.timer.attivo = true
+                    timerToUpdate.tempo += 1000; // Update in milliseconds
+                }, 1000);
             } catch (error) {
                 console.error(error);
             }
@@ -125,28 +119,24 @@ export default {
                     console.error('No token found');
                     return;
                 }
-                const postToUpdate = this.userTimers.find(timers => timers._id === timerId);
-                if (!postToUpdate) {
-                    console.error('Post to update not found');
+                const timerToUpdate = this.userTimers.find(timer => timer._id === timerId);
+                if (!timerToUpdate) {
+                    console.error('Timer to stop not found');
                     return;
                 }
-                const response = await axios.patch(`/timer/${timerId}/arresta`, { tempo: postToUpdate.tempo }, {
+                const response = await axios.patch(`/timer/${timerId}/arresta`, { tempo: timerToUpdate.tempo }, {
                     headers: { Authorization: `bearer ${token}` },
-
                 });
-                this.timer = postToUpdate
 
                 console.log('timer stop:', response.data);
-                // Clear the interval to stop updating the timer
-                clearInterval(this.intervalId);
+                timerToUpdate.attivo = false;
+                this.timerToUpdate = clearInterval(this.intervalId)
                 this.intervalId = null;
-                this.timer.attivo = false
-
             } catch (error) {
                 console.error(error)
             }
         },
-        async resetTimer(timerId){
+        async resetTimer(timerId) {
             try {
                 const token = localStorage.getItem('token'); // Get token from local storage
                 if (!token) {
@@ -154,24 +144,23 @@ export default {
                     console.error('No token found');
                     return;
                 }
-                const postToUpdate = this.userTimers.find(timers => timers._id === timerId);
-                if (!postToUpdate) {
-                    console.error('Post to update not found');
+                const timerToUpdate = this.userTimers.find(timer => timer._id === timerId);
+                if (!timerToUpdate) {
+                    console.error('Timer to stop not found');
                     return;
                 }
-                const response = await axios.put(`/timer/${timerId}/reset`, { tempo: postToUpdate.tempo }, {
+                const response = await axios.put(`/timer/${timerId}/reset`, { tempo: timerToUpdate.tempo }, {
                     headers: { Authorization: `bearer ${token}` },
 
                 });
-                this.timer = postToUpdate
-                postToUpdate.tempo = 0
+                timerToUpdate.tempo = 0
                 console.log('timer reset:', response.data);
 
             } catch (error) {
                 console.error(error)
             }
         },
-        async delteTimer(timerId){
+        async delteTimer(timerId) {
             try {
                 const token = localStorage.getItem('token'); // Get token from local storage
                 if (!token) {
@@ -188,16 +177,6 @@ export default {
             } catch (error) {
                 console.error(error)
             }
-        },
-
-        startInterval() {
-            this.interval = setInterval(() => {
-                this.timers.forEach(timer => {
-                    if (timer.running) {
-                        timer.time++;
-                    }
-                });
-            }, 1000);
         },
     }
 }

@@ -17,10 +17,6 @@ const timerSchema = new mongoose.Schema(
     attivo: {
       type: Boolean,
     },
-    intervallo: {
-      type: Number,
-      default: 1000,
-    },
   },
   { timestamps: true }
 );

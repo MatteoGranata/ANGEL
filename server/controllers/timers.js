@@ -35,7 +35,6 @@ export const startTimer = async (req, res) => {
     return res.status(404).json({ message: "id non conforme con mongo" });
   try {
     const timer = await Timer.findByIdAndUpdate(id, data, { new: true });
-    timer.attivo = true;
     res.status(200).json(timer);
   } catch (error) {
     res.status(404).json({ message: error.message });
@@ -48,7 +47,6 @@ export const stopTimer = async (req, res) => {
     return res.status(404).json({ message: "id non conforme con mongo" });
   try {
     const timer = await Timer.findByIdAndUpdate(id, data, { new: true });
-    timer.attivo = false;
     res.status(200).json(timer);
   } catch (error) {
     res.status(404).json({ message: error.message });
