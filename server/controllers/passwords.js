@@ -2,12 +2,13 @@ import mongoose from "mongoose";
 import { Password } from "../models/password.js";
 
 export const createPassword = async (req, res) => {
-  const { content } = req.body;
+  const { content, secret } = req.body;
   const userId = req.user.userId;
   try {
     const password = new Password({
       author: userId,
       content,
+      secret,
     });
 
     await password.save();

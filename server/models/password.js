@@ -11,10 +11,10 @@ const passwordSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    // private: {
-    //   type: String,
-    //   required: true,
-    // },
+    secret: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );
