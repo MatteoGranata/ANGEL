@@ -1,5 +1,5 @@
 <template>
-    <div class="login-form">
+    <div class="password-form">
         <h2>PASSWORD</h2>
         <form @submit.prevent="createPassword">
             <div class="form-group">
@@ -16,10 +16,10 @@
     <div class="password-container">
         <ul v-if="userPasswords.length > 0">
             <li v-for="password in userPasswords" :key="password._id">
-                <textarea v-model="password.content" name="password" id="password" cols="30"
-                    rows="5">{{ password.content }}</textarea>
+                <textarea v-model="password.content" name="password" id="password" cols="10"
+                    rows="1">{{ password.content }}</textarea>
                 <textarea v-model="password.secret" name="secret" id="secret" cols="30"
-                    rows="5">{{ password.secret }}</textarea>
+                    rows="1">{{ password.secret }}</textarea><br>
                 <button @click="updatePassword(password._id)">update Password</button>
                 <button @click="deletePassword(password._id)">delete Password</button>
             </li>
