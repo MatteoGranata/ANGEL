@@ -8,7 +8,7 @@
             </div>
             <div class="form-group">
                 <label for="profit">profit:</label>
-                <input type="text" id="piggyBank" v-model="profit" />
+                <input type="number" id="piggyBank" v-model="profit" />
             </div>
             <div class="form-group">
                 <label for="nameExpense">name expense:</label>
@@ -16,7 +16,7 @@
             </div>
             <div class="form-group">
                 <label for="expense">expense:</label>
-                <input type="text" id="piggyBank" v-model="expense" />
+                <input type="number" id="piggyBank" v-model="expense" />
             </div>
             <button type="submit">add piggyBank</button>
         </form>
@@ -62,6 +62,7 @@ export default {
     mounted() {
         this.fetchPiggyBank();
     },
+    fetchPiggyBank: {},
     methods: {
         async fetchPiggyBank() {
             try {
@@ -70,7 +71,7 @@ export default {
                     console.error('No token found');
                     return;
                 }
-                const response = await axios.get('/piggybank', {
+                const response = await axios.get('/piggybank/', {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 console.log('piggy:', response.data)
@@ -92,10 +93,12 @@ export default {
                 const response = await axios.post('/piggybank', { nameProfit: this.nameProfit, profit: this.profit, nameExpense: this.nameExpense, expense: this.expense }, {
                     headers: { Authorization: `bearer ${token}` },
                 });
-                console.log('Password added:', response.data);
+                console.log('piggy bank added:', response.data);
 
-                this.userPiggyBanks.push(response.data.piggyBanks)
+                this.userPiggyBanks.push(response.data.piggyBank)
+                this.nameProfit = ''
                 this.profit = ''
+                this.nameExpense = ''
                 this.expense = ''
 
             } catch (error) {

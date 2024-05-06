@@ -5,15 +5,15 @@ export const createPiggyBank = async (req, res) => {
   const { nameProfit, profit, nameExpense, expense } = req.body;
   const userId = req.user.userId;
   try {
-    const newPiggyBank = new PiggyBank({
+    const piggyBank = new PiggyBank({
       author: userId,
       nameProfit,
       profit,
       nameExpense,
       expense,
     });
-    await newPiggyBank.save();
-    res.status(201).json({ newPiggyBank });
+    await piggyBank.save();
+    res.status(201).json({ piggyBank });
   } catch (error) {
     res.status(409).json({ message: error.message });
   }
