@@ -9,7 +9,6 @@ const piggyBankSchema = new mongoose.Schema(
     },
     nameProfit:{
         type:String,
-        required: true,
     },
     profit: [
       {
@@ -18,7 +17,6 @@ const piggyBankSchema = new mongoose.Schema(
     ],
     nameExpense:{
         type:String,
-        required: true,
     },
     expense: [
       {
