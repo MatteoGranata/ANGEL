@@ -4,58 +4,56 @@
         <form @submit.prevent="createProfit">
             <div class="form-group">
                 <label for="nameProfit">name profit:</label>
-                <input type="text" id="piggyBank" v-model="nameProfit" />
+                <input type="text" id="nameProfit" v-model="nameProfit" />
             </div>
             <div class="form-group">
                 <label for="profit">profit:</label>
-                <input type="number" id="piggyBank" v-model="profit" />
+                <input type="number" step="any" id="profit" v-model="profit" required />
             </div>
             <button type="submit">add profit</button>
 
         </form>
-        <!-- v-show="userPiggyBanks == 0" -->
         <form @submit.prevent="createExpense">
             <div class="form-group">
                 <label for="nameExpense">name expense:</label>
-                <input type="text" id="piggyBank" v-model="nameExpense" />
+                <input type="text" id="nameExpense" v-model="nameExpense" />
             </div>
             <div class="form-group">
                 <label for="expense">expense:</label>
-                <input type="number" id="piggyBank" v-model="expense" />
+                <input type="number" step="any" id="expense" v-model="expense" required />
             </div>
             <button type="submit">add expense</button>
         </form>
     </div>
     <div class="piggyBank-container">
         <ul v-if="userPiggyBanks.length > 0">
-            <li v-show="piggyBank.nameProfit != null || piggyBank.profit > 0" v-for="piggyBank in userPiggyBanks"
+            <li v-show="piggyBank.nameProfit || piggyBank.profit != false" v-for="piggyBank in userPiggyBanks"
                 :key="piggyBank._id">
-                <div v-show="piggyBank.nameProfit != null">
+                <div v-show="piggyBank.nameProfit">
                     <p>name profit:</p>
                     <textarea v-model="piggyBank.nameProfit" name="nameProfit" id="nameProfit" cols="10"
                         rows="1"> {{ piggyBank.nameProfit }}</textarea>
                 </div>
-
-                <div v-show="piggyBank.profit > 0">
+                <div v-show="piggyBank.profit != false">
                     <p>profit:</p>
                     <textarea v-model="piggyBank.profit" name="profit" id="profit" cols="10"
-                        rows="1"> {{ piggyBank.profit }}</textarea>
+                        rows="1"> {{ piggyBank.profit.toLocaleString('it-IT', { style: 'currency', currency: 'EUR' }) }}</textarea>
                 </div>
                 <button @click="updatePiggyBank(piggyBank._id)">update Profit</button>
                 <button @click="deletePiggyBank(piggyBank._id)">delete Profit</button>
             </li>
 
-            <li v-show="piggyBank.nameExpense != null || piggyBank.expense > 0" v-for="piggyBank in userPiggyBanks"
-                :key="piggyBank._id">
-                <div v-show="piggyBank.nameExpense != null">
+            <li v-show="piggyBank.nameExpense || piggyBank.expense != false" v-for="piggyBank in userPiggyBanks"
+                :key="piggyBank._id" class="flex">
+                <div v-show="piggyBank.nameExpense">
                     <p>name expense:</p>
                     <textarea v-model="piggyBank.nameExpense" name="nameExpense" id="nameExpense" cols="10"
                         rows="1"> {{ piggyBank.nameExpense }}</textarea>
                 </div>
-                <div v-show="piggyBank.expense > 0">
+                <div v-show="piggyBank.expense != false">
                     <p>expense:</p>
-                    <textarea v-model="piggyBank.expense" name="expense" id="expense" cols="30"
-                        rows="1">{{ piggyBank.expense }}</textarea>
+                    <textarea v-model="piggyBank.expense" name="expense" id="expense" cols="10"
+                        rows="1">{{ piggyBank.expense.toLocaleString('it-IT', { style: 'currency', currency: 'EUR' }) }}</textarea>
                 </div>
                 <button @click="updatePiggyBank(piggyBank._id)">update expense</button>
                 <button @click="deletePiggyBank(piggyBank._id)">delete expense</button>
@@ -63,8 +61,9 @@
 
         </ul>
         <p v-else>No piggy banks found.</p>
-    </div>
+        {{ balance.toLocaleString('it-IT', { style: 'currency', currency: 'EUR' }) }}
 
+    </div>
 </template>
 
 <script>
@@ -77,14 +76,32 @@ export default {
             profit: '',
             nameExpense: '',
             expense: '',
+            balance: '',
             userPiggyBanks: [],
         };
     },
     mounted() {
-        this.fetchPiggyBank();
+        this.fetchBalance(),
+            this.fetchPiggyBank();
     },
-    fetchPiggyBank: {},
     methods: {
+        async fetchBalance() {
+            try {
+                const token = localStorage.getItem('token');
+                if (!token) {
+                    console.error('No token found');
+                    return;
+                }
+                const response = await axios.get('/piggybank/balance', {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+                console.log('balance:', response.data)
+                // Update the assignment based on your actual API response structure
+                this.balance = response.data.balance;
+            } catch (error) {
+                console.error(error);
+            }
+        },
         async fetchPiggyBank() {
             try {
                 const token = localStorage.getItem('token');
@@ -103,6 +120,7 @@ export default {
                 console.error(error);
             }
         },
+
         async createProfit() {
             try {
                 const token = localStorage.getItem('token'); // Get token from local storage
@@ -119,7 +137,7 @@ export default {
                 this.userPiggyBanks.push(response.data.piggyBank)
                 this.nameProfit = ''
                 this.profit = ''
-
+                this.fetchBalance()
             } catch (error) {
                 console.error(error);
             }
@@ -140,7 +158,7 @@ export default {
                 this.userPiggyBanks.push(response.data.piggyBank)
                 this.nameExpense = ''
                 this.expense = ''
-
+                this.fetchBalance()
             } catch (error) {
                 console.error(error);
             }
@@ -164,6 +182,7 @@ export default {
                 });
 
                 console.log('Piggy bank updated:', response.data);
+                this.fetchBalance()
             } catch (error) {
                 console.error(error);
             }
@@ -183,6 +202,7 @@ export default {
                 });
                 console.log('Password removed:', response.data);
                 this.userPiggyBanks = this.userPiggyBanks.filter(password => password._id !== piggyBankId);
+                this.fetchBalance()
             } catch (error) {
                 console.error(error)
             }
