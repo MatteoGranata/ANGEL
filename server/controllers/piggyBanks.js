@@ -54,3 +54,16 @@ export const deletePiggyBank = async (req, res) => {
     res.status(404).json({ message: error.message });
   }
 };
+export const getBalance = async (req, res) => {
+  const userId = req.user.userId;
+  try {
+    const piggyBanks = await PiggyBank.find({ author: userId });
+    let balance = 0;
+    piggyBanks.forEach((piggyBank) => {
+      balance += piggyBank.profit - piggyBank.expense;
+    });
+    res.status(200).json({ balance });
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};

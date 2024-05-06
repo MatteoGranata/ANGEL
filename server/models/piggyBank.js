@@ -7,22 +7,25 @@ const piggyBankSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    nameProfit:{
-        type:String,
+    nameProfit: {
+      type: String,
     },
     profit: [
       {
         type: Number,
       },
     ],
-    nameExpense:{
-        type:String,
+    nameExpense: {
+      type: String,
     },
     expense: [
       {
         type: Number,
       },
     ],
+    balance: {
+      type: Number,
+    },
   },
   { timestamps: true }
 );
