@@ -5,7 +5,7 @@ const router = express.Router()
 
 router.post('/', createPiggyBank);
 router.get('/', getPiggyBanks);
-router.get('/', getBalance);
+router.get('/balance', getBalance);
 router.patch('/:id', updatePiggyBank);
 router.delete('/:id', deletePiggyBank);
 
