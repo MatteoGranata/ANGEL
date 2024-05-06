@@ -1,7 +1,7 @@
 <template>
     <div class="piggyBank-form">
         <h2>PIGGY BANK</h2>
-        <form @submit.prevent="createPiggyBank">
+        <form v-show="userPiggyBanks == 0" @submit.prevent="createPiggyBank">
             <div class="form-group">
                 <label for="nameProfit">name profit:</label>
                 <input type="text" id="piggyBank" v-model="nameProfit" />
@@ -38,6 +38,7 @@
                     rows="1">{{ piggyBank.expense }}</textarea><br>
                 <button @click="updatePiggyBank(piggyBank._id)">update PiggyBank</button>
                 <button @click="deletePiggyBank(piggyBank._id)">delete PiggyBank</button>
+
             </li>
 
         </ul>
@@ -118,12 +119,12 @@ export default {
                     console.error('Password to update not found');
                     return;
                 }
-                console.log(piggyBankToUpdate)
-                const response = await axios.patch(`/piggybank/${piggyBankId}`, { profit: passwordToUpdate.profit, expense: passwordToUpdate.expense }, {
+                console.log('test', piggyBankToUpdate)
+                const response = await axios.patch(`/piggybank/${piggyBankId}`, { nameProfit: piggyBankToUpdate.nameProfit, profit: piggyBankToUpdate.profit, nameExpense: piggyBankToUpdate.nameExpense, expense: piggyBankToUpdate.expense }, {
                     headers: { Authorization: `bearer ${token}` },
                 });
 
-                console.log('Password updated:', response.data);
+                console.log('Piggy bank updated:', response.data);
             } catch (error) {
                 console.error(error);
             }
@@ -136,7 +137,6 @@ export default {
                     console.error('No token found');
                     return;
                 }
-
                 const response = await axios.delete(`/piggybank/${piggyBankId}`, {
                     headers: { Authorization: `bearer ${token}` },
 
