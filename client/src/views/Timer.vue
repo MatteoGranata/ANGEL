@@ -81,7 +81,7 @@ export default {
                     console.error('No Project found');
                     return;
                 }
-                const response = await axios.get(`https://pippo-bn7v.onrender.com/project/${projectID}`, {
+                const response = await axios.get(`https://angel-fq3c.onrender.com/project/${projectID}`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 this.userTimers = response.data.timers;
@@ -102,7 +102,7 @@ export default {
                     console.error('No Project found');
                     return;
                 }
-                const response = await axios.post('https://pippo-bn7v.onrender.com/timer', { nome: this.nome, projectId: projectID }, {
+                const response = await axios.post('https://angel-fq3c.onrender.com/timer', { nome: this.nome, projectId: projectID }, {
                     headers: { Authorization: `bearer ${token}` },
                 });
                 console.log('timer added:', response.data);
@@ -132,7 +132,7 @@ export default {
                     console.error('Post to update not found');
                     return;
                 }
-                const response = await axios.patch(`https://pippo-bn7v.onrender.com/timer/${timerId}`, { nome: timerToUpdate.nome }, {
+                const response = await axios.patch(`https://angel-fq3c.onrender.com/timer/${timerId}`, { nome: timerToUpdate.nome }, {
                     headers: { Authorization: `bearer ${token}` },
                 });
 
@@ -154,7 +154,7 @@ export default {
                     return;
                 }
 
-                const response = await axios.patch(`https://pippo-bn7v.onrender.com/timer/${timerId}/avvia`, { tempo: timerToUpdate.tempo }, {
+                const response = await axios.patch(`https://angel-fq3c.onrender.com/timer/${timerId}/avvia`, { tempo: timerToUpdate.tempo }, {
                     headers: { Authorization: `bearer ${token}` },
                 });
                 console.log('timer start:', response.data);
@@ -180,7 +180,7 @@ export default {
                     console.error('Timer to stop not found');
                     return;
                 }
-                const response = await axios.patch(`https://pippo-bn7v.onrender.com/timer/${timerId}/arresta`, { tempo: timerToUpdate.tempo }, {
+                const response = await axios.patch(`https://angel-fq3c.onrender.com/timer/${timerId}/arresta`, { tempo: timerToUpdate.tempo }, {
                     headers: { Authorization: `bearer ${token}` },
                 });
 
@@ -205,7 +205,7 @@ export default {
                     console.error('Timer to stop not found');
                     return;
                 }
-                const response = await axios.put(`https://pippo-bn7v.onrender.com/timer/${timerId}/reset`, { tempo: timerToUpdate.tempo }, {
+                const response = await axios.put(`https://angel-fq3c.onrender.com/timer/${timerId}/reset`, { tempo: timerToUpdate.tempo }, {
                     headers: { Authorization: `bearer ${token}` },
 
                 });
@@ -224,7 +224,7 @@ export default {
                     console.error('No token found');
                     return;
                 }
-                const response = await axios.delete(`https://pippo-bn7v.onrender.com/timer/${timerId}`, {
+                const response = await axios.delete(`https://angel-fq3c.onrender.com/timer/${timerId}`, {
                     headers: { Authorization: `bearer ${token}` },
 
                 });

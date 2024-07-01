@@ -49,7 +49,7 @@
         selectedFile: null,
         user: '',
         errorimage: '',
-        baseUrl: 'https://pippo-bn7v.onrender.com/',
+        baseUrl: 'https://angel-fq3c.onrender.com/',
         currentPassword: '',
         newPassword: '',
       };
@@ -70,7 +70,7 @@
             console.error('No userId found');
             return;
           }
-          const response = await axios.get(`https://pippo-bn7v.onrender.com/users/${userId}`, {
+          const response = await axios.get(`https://angel-fq3c.onrender.com/users/${userId}`, {
             headers: { Authorization: `bearer ${token}` },
           });
           this.user = response.data;
@@ -103,7 +103,7 @@
             console.error('No userId found');
             return;
           }
-          const response = await axios.post(`https://pippo-bn7v.onrender.com/users/${userId}/image`, formData, {
+          const response = await axios.post(`https://angel-fq3c.onrender.com/users/${userId}/image`, formData, {
             headers: {
               'Authorization': `Bearer ${token}`
             }

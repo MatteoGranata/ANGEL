@@ -85,7 +85,7 @@ export default {
                     console.error('No Project found');
                     return;
                 }
-                const response = await axios.get(`https://pippo-bn7v.onrender.com/project/${projectID}`, {
+                const response = await axios.get(`https://angel-fq3c.onrender.com/project/${projectID}`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 this.nameProject = response.data
@@ -115,7 +115,7 @@ export default {
                     console.error('No Project found');
                     return;
                 }
-                const response = await axios.patch(`https://pippo-bn7v.onrender.com/project/${projectID}`, { name: this.nameProject.name }, {
+                const response = await axios.patch(`https://angel-fq3c.onrender.com/project/${projectID}`, { name: this.nameProject.name }, {
                     headers: { Authorization: `bearer ${token}` },
                 });
 

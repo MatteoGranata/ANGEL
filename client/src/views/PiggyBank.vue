@@ -124,7 +124,7 @@ export default {
                     console.error('No Project found');
                     return;
                 }
-                const response = await axios.get(`https://pippo-bn7v.onrender.com/piggybank/${projectID}/balance`, {
+                const response = await axios.get(`https://angel-fq3c.onrender.com/piggybank/${projectID}/balance`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 this.balance = response.data.total;
@@ -144,7 +144,7 @@ export default {
                     console.error('No Project found');
                     return;
                 }
-                const response = await axios.get(`https://pippo-bn7v.onrender.com/project/${projectID}`, {
+                const response = await axios.get(`https://angel-fq3c.onrender.com/project/${projectID}`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 this.userExpenses = response.data.piggyBanks.expenses;
@@ -166,7 +166,7 @@ export default {
                     console.error('No Project found');
                     return;
                 }
-                const response = await axios.post('https://pippo-bn7v.onrender.com/piggybank/profit', { nameProfit: this.nameProfit, projectId: projectID }, {
+                const response = await axios.post('https://angel-fq3c.onrender.com/piggybank/profit', { nameProfit: this.nameProfit, projectId: projectID }, {
                     headers: { Authorization: `bearer ${token}` },
                 });
                 this.userProfits.push(response.data.profit)
@@ -187,7 +187,7 @@ export default {
                     console.error('No Project found');
                     return;
                 }
-                const response = await axios.post('https://pippo-bn7v.onrender.com/piggybank/expense', { nameExpense: this.nameExpense, projectId: projectID }, {
+                const response = await axios.post('https://angel-fq3c.onrender.com/piggybank/expense', { nameExpense: this.nameExpense, projectId: projectID }, {
                     headers: { Authorization: `bearer ${token}` },
                 });
                 this.userExpenses.push(response.data.expense)
@@ -215,7 +215,7 @@ export default {
                     console.error('Piggy bank to update not found');
                     return;
                 }
-                const response = await axios.patch(`https://pippo-bn7v.onrender.com/piggybank/profit/${profitId}`, {
+                const response = await axios.patch(`https://angel-fq3c.onrender.com/piggybank/profit/${profitId}`, {
                     nameProfit: profitToUpdate.nameProfit,
                     amount: profitToUpdate.amount,
                 }, {
@@ -244,7 +244,7 @@ export default {
                     console.error('Piggy bank to update not found');
                     return;
                 }
-                const response = await axios.patch(`https://pippo-bn7v.onrender.com/piggybank/expense/${expenseId}`, {
+                const response = await axios.patch(`https://angel-fq3c.onrender.com/piggybank/expense/${expenseId}`, {
                     nameExpense: expenseToUpdate.nameExpense,
                     amount: expenseToUpdate.amount,
                 }, {
@@ -262,7 +262,7 @@ export default {
                     console.error('No token found');
                     return;
                 }
-                const response = await axios.delete(`https://pippo-bn7v.onrender.com/piggybank/profit/${profitId}`, {
+                const response = await axios.delete(`https://angel-fq3c.onrender.com/piggybank/profit/${profitId}`, {
                     headers: { Authorization: `bearer ${token}` },
                 });
                 this.userProfits = this.userProfits.filter(piggyBank => piggyBank._id !== profitId);
@@ -278,7 +278,7 @@ export default {
                     console.error('No token found');
                     return;
                 }
-                const response = await axios.delete(`https://pippo-bn7v.onrender.com/piggybank/expense/${expenseId}`, {
+                const response = await axios.delete(`https://angel-fq3c.onrender.com/piggybank/expense/${expenseId}`, {
                     headers: { Authorization: `bearer ${token}` },
                 });
                 this.userExpenses = this.userExpenses.filter(piggyBank => piggyBank._id !== expenseId);

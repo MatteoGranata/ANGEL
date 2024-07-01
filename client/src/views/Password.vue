@@ -87,7 +87,7 @@ export default {
                     console.error('No Project found');
                     return;
                 }
-                const response = await axios.get(`https://pippo-bn7v.onrender.com/project/${projectID}`, {
+                const response = await axios.get(`https://angel-fq3c.onrender.com/project/${projectID}`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 this.userPasswords = response.data.passwords.map(passwords => ({ ...passwords, show: false }));
@@ -108,7 +108,7 @@ export default {
                     console.error('No Project found');
                     return;
                 }
-                const response = await axios.post('https://pippo-bn7v.onrender.com/password', { passwordContent: this.passwordContent, secret: this.secret, projectId: projectID }, {
+                const response = await axios.post('https://angel-fq3c.onrender.com/password', { passwordContent: this.passwordContent, secret: this.secret, projectId: projectID }, {
                     headers: { Authorization: `bearer ${token}` },
                 });
                 this.userPasswords.push({ ...response.data.password, show: false });
@@ -134,7 +134,7 @@ export default {
                     console.error('Password to update not found');
                     return;
                 }
-                const response = await axios.patch(`https://pippo-bn7v.onrender.com/password/${passwordId}`, { passwordContent: passwordToUpdate.passwordContent, secret: passwordToUpdate.secret }, {
+                const response = await axios.patch(`https://angel-fq3c.onrender.com/password/${passwordId}`, { passwordContent: passwordToUpdate.passwordContent, secret: passwordToUpdate.secret }, {
                     headers: { Authorization: `bearer ${token}` },
                 });
             } catch (error) {
@@ -158,7 +158,7 @@ export default {
                 } else if (passwordToUpdate.pin === false) {
                     passwordToUpdate.pin = true;
                 }
-                const response = await axios.patch(`https://pippo-bn7v.onrender.com/password/${passwordId}`, { pin: passwordToUpdate.pin }, {
+                const response = await axios.patch(`https://angel-fq3c.onrender.com/password/${passwordId}`, { pin: passwordToUpdate.pin }, {
                     headers: { Authorization: `bearer ${token}` },
                 });
             } catch (error) {
@@ -172,7 +172,7 @@ export default {
                     console.error('No token found');
                     return;
                 }
-                const response = await axios.delete(`https://pippo-bn7v.onrender.com/password/${passwordId}`, {
+                const response = await axios.delete(`https://angel-fq3c.onrender.com/password/${passwordId}`, {
                     headers: { Authorization: `bearer ${token}` },
                 });
                 console.log('Password removed:', response.data);

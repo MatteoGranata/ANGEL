@@ -66,7 +66,7 @@ export default {
  methods: {
    async register() {
      try {
-       const response = await axios.post("https://pippo-bn7v.onrender.com/auth/register", { username: this.username, password: this.password, email: this.email }) // POST request
+       const response = await axios.post("https://angel-fq3c.onrender.com/auth/register", { username: this.username, password: this.password, email: this.email }) // POST request
        // Handle successful response
        if (response.data.status == 'okay') {
          await this.$router.push('/login');

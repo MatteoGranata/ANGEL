@@ -65,7 +65,7 @@ export default {
                     console.error('No Project found');
                     return;
                 }
-                const response = await axios.get(`https://pippo-bn7v.onrender.com/project/${projectID}`, {
+                const response = await axios.get(`https://angel-fq3c.onrender.com/project/${projectID}`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 this.userPosts = response.data.posts;
@@ -85,7 +85,7 @@ export default {
                     console.error('No Project found');
                     return;
                 }
-                const response = await axios.post('https://pippo-bn7v.onrender.com/post', { postContent: this.postContent, projectId: projectID }, {
+                const response = await axios.post('https://angel-fq3c.onrender.com/post', { postContent: this.postContent, projectId: projectID }, {
                     headers: { Authorization: `bearer ${token}` },
                 });
                 console.log('Post added:', response.data);
@@ -116,7 +116,7 @@ export default {
                     console.error('Post to update not found');
                     return;
                 }
-                const response = await axios.patch(`https://pippo-bn7v.onrender.com/post/${postId}`, { postContent: postToUpdate.postContent }, {
+                const response = await axios.patch(`https://angel-fq3c.onrender.com/post/${postId}`, { postContent: postToUpdate.postContent }, {
                     headers: { Authorization: `bearer ${token}` },
                 });
 
@@ -142,7 +142,7 @@ export default {
                 } else if (postToUpdate.pin === false) {
                     postToUpdate.pin = true;
                 }
-                const response = await axios.patch(`https://pippo-bn7v.onrender.com/post/${postId}`, { pin: postToUpdate.pin }, {
+                const response = await axios.patch(`https://angel-fq3c.onrender.com/post/${postId}`, { pin: postToUpdate.pin }, {
                     headers: { Authorization: `bearer ${token}` },
                 });
             } catch (error) {
@@ -156,7 +156,7 @@ export default {
                     console.error('No token found');
                     return;
                 }
-                const response = await axios.delete(`https://pippo-bn7v.onrender.com/post/${postId}`, {
+                const response = await axios.delete(`https://angel-fq3c.onrender.com/post/${postId}`, {
                     headers: { Authorization: `bearer ${token}` },
 
                 });
