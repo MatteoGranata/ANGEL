@@ -7,15 +7,21 @@ const passwordSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    content: {
+    passwordContent: {
       type: String,
-      required: true,
     },
     secret: {
       type: String,
+    },
+    projectId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Project",
       required: true,
     },
-    projectId: { type: mongoose.Schema.Types.ObjectId, ref: "Project", required: true },
+    pin: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );
