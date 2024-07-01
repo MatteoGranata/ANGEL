@@ -1,4 +1,4 @@
-import mongoose, { SchemaType } from "mongoose";
+import mongoose from "mongoose";
 
 const postSchema = new mongoose.Schema(
   {
@@ -7,10 +7,17 @@ const postSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    content: {
+    postContent: {
       type: String,
     },
-    projectId: { type: mongoose.Schema.Types.ObjectId, ref: 'project', required: true }
+    projectId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "project",
+    },
+    pin: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );
