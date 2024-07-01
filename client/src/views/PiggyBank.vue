@@ -1,129 +1,90 @@
 <template>
-    <div class="bg-neutral-900 min-h-screen h-fit w-full">
-        <div class="flex flex-col w-full h-fit mt-10">
-            <div class="grid grid-cols-1 sm:grid-cols-1 xl:grid-cols-2 w-full">
-                <form @submit.prevent="createProfit"
-                    class="h-full flex justify-center sm:justify-center xl:justify-end me-0 sm:me-0 xl:me-3">
-                    <div class="mt-10 p-5 border-2 border-neutral-600 flex rounded-xl w-80 flex">
-                        <div class="sm:col-span-4">
-                            <label for="nameProfit" class="block text-sm font-medium leading-6 text-slate-50">
-                                NAME PROFIT:</label>
-                            <div class="mt-1 mb-2">
-                                <div
-                                    class="flex rounded-md shadow-sm ring-1 ring-neutral-600 focus-within:ring-2 focus-within:ring-inset focus-within:ring-neutral-400 sm:max-w-md">
-                                    <input type="text" v-model="nameProfit"
-                                        class="pl-2 outline-none block flex-1 w-60 bg-transparent py-1.5 pl-1 text-slate-50 sm:text-sm sm:leading-6" />
+    <div
+        class="min-h-full sm:min-h-[97vh] h-full w-[97vw] sm:w-full pt-3 pr-3 pb-4 pl-3 sm:pl-7 sm:pr-3 bg-ghost mt-5 mb-3 sm:mt-3 sm:mx-3 rounded-xl sm:text-lg">
+        <div class="flex justify-center w-full h-full drop-shadow-3xl">
+            <div class="flex flex-col sm:flex-row justify-center w-full h-full">
+                <div class="flex flex-wrap w-full justify-center sm:w-fit h-fit">
+                    <p
+                        class="p-5 bg-ghost flex rounded-lg w-fit items-center text-center text-slate-800 font-medium shadow-lg flex">
+                        TOTAL<br>{{ formatCurrency(balance) }}
+                    </p>
+                </div>
+                <ul class="grid grid-cols-2 gap-5 md:grid-cols-2 h-full w-full mt-5 sm:ml-5 sm:mt-0">
+                    <div class="flex flex-row justify-center h-full rounded-xl text-slate-800">
+                        <div
+                            class="grid gap-3 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3 rounded-xl w-full h-fit">
+                            <li v-for="piggyBank in userProfits" :key="piggyBank._id"
+                                class="flex flex-col bg-ghost rounded-xl w-full h-fit p-1 shadow-lg">
+                                <div class="resize-none h-fit w-full">
+                                    <textarea @keyup="autoUpdateProfit(piggyBank._id)" v-model="piggyBank.nameProfit"
+                                        name="nameProfit" placeholder="name profit..." rows="1"
+                                        class="bg-ghost overflow-hidden rounded-md pl-2 pt-0.5 resize-none h-full w-full outline-none font-medium">
+                                </textarea>
                                 </div>
-                            </div>
-                            <div class="sm:col-span-4 mt-2">
-                                <label for="profit" class="block text-sm font-medium text-slate-50">PROFIT:</label>
-                                <div class="mt-1">
-                                    <div
-                                        class="flex rounded-md shadow-sm ring-1 ring-inset ring-neutral-600 focus-within:ring-2 focus-within:ring-inset focus-within:ring-neutral-400 sm:max-w-md">
-                                        <input type="number" step="any" v-model="profit" required
-                                            class="pl-2 outline-none block flex-1 leading-6 w-60 leanding-6 bg-transparent py-1.5 pl-1 text-slate-50 focus:ring-0 sm:text-sm sm:leading-6" />
+                                <div class="resize-none h-fit w-full">
+                                    <div class="relative mt-2 rounded-md">
+                                        <div
+                                            class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-2 font-bold">
+                                            <span class="text-emerald-600">+</span>
+                                        </div>
+                                        <input type="number" placeholder="0" v-model="piggyBank.amount" name="amount"
+                                            @keyup="autoUpdateProfit(piggyBank._id)"
+                                            class="block bg-ghost overflow-hidden rounded-md pl-6 pt-0.5 mb-2 resize-none h-full w-full outline-none">
+                                        </input>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="mt-2 text-end">
-                                <button type="submit"
-                                    class="rounded-md px-1.5 py-0.5 text-sm ring-2 ring-inset ring-neutral-600 hover:ring-green-900 hover:bg-green-700 text-slate-50">
-                                    ADD PROFIT
+                                <div class="mt-2 flex-row flex">
+                                    <button @click="deleteProfit(piggyBank._id)"
+                                        class="rounded-md px-2 w-8 h-8 text-lg mx-2 shadow-3xl ring-2 ring-inset ring-slate-100/50 hover:bg-snow">
+                                        <img src="../assets/trashcan.png" alt="DELETE">
+                                    </button>
+                                </div>
+                            </li>
+                            <li class="flex h-fit w-full sm:w-fit justify-center items-center">
+                                <button @click="createProfit"
+                                    class="py-5 m-7 w-20 h-20 text-emerald-600 flex justify-center rounded-full bg-ghost text-5xl ring-2 ring-inset ring-snow/70 hover:bg-snow drop-shadow-3xl">
+                                    +
                                 </button>
-                            </div>
+                            </li>
                         </div>
                     </div>
-                </form>
-                <form @submit.prevent="createExpense"
-                    class="h-full flex justify-center sm:justify-center xl:justify-start">
-                    <div class="mt-10 p-5 border-2 border-neutral-600 flex rounded-xl w-80 flex">
-                        <div class="sm:col-span-4">
-                            <label for="nameExpense" class="block text-sm font-medium leading-6 text-slate-50">
-                                NAME EXPENSE:
-                            </label>
-                            <div class="mt-1 mb-2">
-                                <div
-                                    class="flex rounded-md shadow-sm ring-1 ring-neutral-600 focus-within:ring-2 focus-within:ring-inset focus-within:ring-neutral-400 sm:max-w-md">
-                                    <input type="text" v-model="nameExpense"
-                                        class="pl-2 outline-none block flex-1 w-60 bg-transparent py-1.5 pl-1 text-slate-50 sm:text-sm sm:leading-6" />
+                    <div class="flex flex-row justify-center h-full rounded-xl text-slate-800">
+                        <div
+                            class="grid gap-3 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3 rounded-xl w-full h-fit">
+                            <li v-for="piggyBank in userExpenses" :key="piggyBank._id"
+                                class="flex flex-col bg-ghost rounded-xl w-full h-fit p-1 shadow-lg">
+                                <div class="resize-none h-fit w-full">
+                                    <textarea @keyup="autoUpdateExpense(piggyBank._id)" v-model="piggyBank.nameExpense"
+                                        name="nameExpense" placeholder="Name Expense" rows="1"
+                                        class="bg-ghost overflow-hidden rounded-md pl-2 pt-0.5 resize-none h-full w-full outline-none">
+                                </textarea>
                                 </div>
-                            </div>
-                            <div class="sm:col-span-4 mt-2">
-                                <label for="expense" class="block text-sm font-medium text-slate-50">EXPENSE:</label>
-                                <div class="mt-1">
-                                    <div
-                                        class="flex rounded-md shadow-sm ring-1 ring-inset ring-neutral-600 focus-within:ring-2 focus-within:ring-inset focus-within:ring-neutral-400 overflow-hidden sm:max-w-md">
-                                        <input type="number" step="any" v-model="expense" required
-                                            class="pl-2 outline-none block flex-1 leading-6 w-60 leanding-6 bg-transparent py-1.5 pl-1 text-slate-50 focus:ring-0 sm:text-sm sm:leading-6" />
+                                <div class="resize-none h-fit w-full">
+                                    <div class="relative mt-2 rounded-md">
+                                        <div
+                                            class="pointer-events-none absolute inset-y-0 left-0 flex items-center font-bold pb-0.5 pl-2">
+                                            <span class="text-orange-600">-</span>
+                                        </div>
+                                        <input type="number" placeholder="0" v-model="piggyBank.amount"
+                                            name="amountExpense" @keyup="autoUpdateExpense(piggyBank._id)"
+                                            class="block bg-ghost overflow-hidden rounded-md pl-6 pt-0.5 mb-2 resize-none h-full w-full outline-none">
+                                        </input>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="mt-2 text-end">
-                                <button type="submit"
-                                    class="rounded-md px-1.5 py-0.5 text-sm ring-2 ring-inset ring-neutral-600 hover:ring-red-900 hover:bg-red-700 text-slate-50">
-                                    ADD EXPENSE
+                                <div class="mt-2 flex flex-row">
+                                    <button @click="deleteExpense(piggyBank._id)"
+                                        class="rounded-md px-2 w-8 h-8 text-lg mx-2 shadow-3xl ring-2 ring-inset ring-slate-100/50 hover:bg-snow">
+                                        <img src="../assets/trashcan.png" alt="delete">
+                                    </button>
+                                </div>
+                            </li>
+                            <li class="flex h-fit w-full sm:w-fit justify-center items-center">
+                                <button @click="createExpense"
+                                    class="py-4 m-7 w-20 h-20 flex justify-center rounded-full bg-ghost text-5xl text-orange-600 ring-2 ring-inset ring-snow/70 hover:bg-snow drop-shadow-3xl">
+                                    -
                                 </button>
-                            </div>
+                            </li>
                         </div>
-                    </div>
-                </form>
-            </div>
-            <div class="flex justify-center">
-                <p
-                    class="flex text-center border-2 border-neutral-600 rounded-xl shadow-sm bg-neutral-900 w-fit h-fit px-3 py-1.5 mt-2">
-                    TOTAL<br>{{ formatCurrency(balance) }}
-                </p>
-            </div>
-            <div class="flex flex-row justify-center h-fit mx-4 mt-10">
-                <ul class="flex justify-center flex-col">
-                    <div
-                        class="grid gap-9 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 mb-2">
-                        <li v-show="piggyBank.nameProfit || piggyBank.profit != false"
-                            v-for="piggyBank in userPiggyBanks" :key="piggyBank._id"
-                            class="flex flex-col flex-wrap mx-1 border-2 border-neutral-600 rounded-lg w-60 h-fit p-2">
-                            <div class="resize-none h-fit w-full">
-                                <textarea @keyup="autoUpdate(piggyBank._id)" v-model="piggyBank.nameProfit"
-                                    class="bg-neutral-800 overflow-hidden rounded-md pl-2 pt-0.5 mb-2 resize-none h-full w-full outline-none"></textarea>
-                            </div>
-                            <div class="resize-none h-fit w-full">
-                                <div class="relative mt-2 rounded-md shadow-sm">
-                                    <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-2">
-                                        <span class="text-green-500">+</span>
-                                    </div>
-                                    <textarea v-model="piggyBank.profit" @keyup="autoUpdate(piggyBank._id)" rows="1"
-                                        class="block bg-neutral-800 overflow-hidden rounded-md pl-6 pt-0.5 mb-2 resize-none h-full w-full outline-none">
-                                    </textarea>
-                                </div>
-                            </div>
-                            <div class="flex-row flex">
-                                <button @click="deletePiggyBank(piggyBank._id)"
-                                    class="rounded-md px-1.5 py-0.5 text-lg text-gray-900 mx-2 shadow-sm ring-2 ring-inset ring-neutral-600 hover:bg-neutral-800">&#128465;</button>
-                            </div>
-                        </li>
-                    </div>
-                    <div class="grid gap-9 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6">
-                        <li v-show="piggyBank.nameExpense || piggyBank.expense != false"
-                            v-for="piggyBank in userPiggyBanks" :key="piggyBank._id"
-                            class="flex flex-col flex-wrap mx-1 border-2 border-neutral-600 rounded-lg w-60 h-fit p-2">
-                            <div class="resize-none h-fit w-full">
-                                <textarea @keyup="autoUpdate(piggyBank._id)" v-model="piggyBank.nameExpense"
-                                    class="bg-neutral-800 overflow-hidden rounded-md pl-2 pt-0.5 mb-2 resize-none h-full w-full outline-none"></textarea>
-                            </div>
-                            <div class="resize-none h-fit w-full">
-                                <div class="relative mt-2 rounded-md shadow-sm">
-                                    <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-2">
-                                        <span class="text-red-500">-</span>
-                                    </div>
-                                    <textarea v-model="piggyBank.expense" @keyup="autoUpdate(piggyBank._id)" rows="1"
-                                        class="block bg-neutral-800 overflow-hidden rounded-md pl-6 pt-0.5 mb-2 resize-none h-full w-full outline-none">
-                                    </textarea>
-                                </div>
-                            </div>
-                            <div class="flex flex-row">
-                                <button @click="deletePiggyBank(piggyBank._id)"
-                                    class="rounded-md px-1.5 py-0.5 text-lg text-gray-900 mx-2 shadow-sm ring-2 ring-inset ring-neutral-600 hover:bg-neutral-800">&#128465;</button>
-                            </div>
-                        </li>
                     </div>
                 </ul>
             </div>
@@ -138,11 +99,11 @@ export default {
     data() {
         return {
             nameProfit: '',
-            profit: '',
+            amount: '',
             nameExpense: '',
-            expense: '',
             balance: '',
-            userPiggyBanks: [],
+            userProfits: [],
+            userExpenses: [],
         };
     },
     mounted() {
@@ -158,10 +119,15 @@ export default {
                     console.error('No token found');
                     return;
                 }
-                const response = await axios.get('/piggybank/balance', {
+                const projectID = localStorage.getItem("projectID");
+                if (!projectID) {
+                    console.error('No Project found');
+                    return;
+                }
+                const response = await axios.get(`https://pippo-bn7v.onrender.com/piggybank/${projectID}/balance`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
-                this.balance = response.data.balance;
+                this.balance = response.data.total;
             } catch (error) {
                 console.error(error);
             }
@@ -173,11 +139,16 @@ export default {
                     console.error('No token found');
                     return;
                 }
-                const response = await axios.get('/piggybank/', {
+                const projectID = localStorage.getItem("projectID");
+                if (!projectID) {
+                    console.error('No Project found');
+                    return;
+                }
+                const response = await axios.get(`https://pippo-bn7v.onrender.com/project/${projectID}`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
-                this.userPiggyBanks = response.data.piggyBanks;
-                return this.userPiggyBanks.profit > 0 ? `+${this.userPiggyBanks.profit}` : this.userPiggyBanks.profit;
+                this.userExpenses = response.data.piggyBanks.expenses;
+                this.userProfits = response.data.piggyBanks.profits;
             } catch (error) {
                 console.error(error);
             }
@@ -190,12 +161,15 @@ export default {
                     console.error('No token found');
                     return;
                 }
-                const response = await axios.post('/piggybank', { nameProfit: this.nameProfit, profit: this.profit }, {
+                const projectID = localStorage.getItem("projectID");
+                if (!projectID) {
+                    console.error('No Project found');
+                    return;
+                }
+                const response = await axios.post('https://pippo-bn7v.onrender.com/piggybank/profit', { nameProfit: this.nameProfit, projectId: projectID }, {
                     headers: { Authorization: `bearer ${token}` },
                 });
-                this.userPiggyBanks.push(response.data.piggyBank)
-                this.nameProfit = ''
-                this.profit = ''
+                this.userProfits.push(response.data.profit)
                 this.fetchBalance()
             } catch (error) {
                 console.error(error);
@@ -208,40 +182,42 @@ export default {
                     console.error('No token found');
                     return;
                 }
-                const response = await axios.post('/piggybank', { nameExpense: this.nameExpense, expense: this.expense }, {
+                const projectID = localStorage.getItem("projectID");
+                if (!projectID) {
+                    console.error('No Project found');
+                    return;
+                }
+                const response = await axios.post('https://pippo-bn7v.onrender.com/piggybank/expense', { nameExpense: this.nameExpense, projectId: projectID }, {
                     headers: { Authorization: `bearer ${token}` },
                 });
-                this.userPiggyBanks.push(response.data.piggyBank)
-                this.nameExpense = ''
-                this.expense = ''
+                this.userExpenses.push(response.data.expense)
                 this.fetchBalance()
             } catch (error) {
                 console.error(error);
             }
         },
-        async autoUpdate(piggyBankId) {
+        async autoUpdateProfit(piggyBankId) {
             clearTimeout(this.timeoutId);
             this.timeoutId = setTimeout(() => {
-                this.updatePiggyBank(piggyBankId)
+                this.updateProfit(piggyBankId)
             }, 300);
         },
-        async updatePiggyBank(piggyBankId) {
+
+        async updateProfit(profitId) {
             try {
                 const token = localStorage.getItem('token');
                 if (!token) {
                     console.error('No token found');
                     return;
                 }
-                const piggyBankToUpdate = this.userPiggyBanks.find(piggyBank => piggyBank._id === piggyBankId);
-                if (!piggyBankToUpdate) {
+                const profitToUpdate = this.userProfits.find(piggyBank => piggyBank._id === profitId);
+                if (!profitToUpdate) {
                     console.error('Piggy bank to update not found');
                     return;
                 }
-                const response = await axios.patch(`/piggybank/${piggyBankId}`, {
-                    nameProfit: piggyBankToUpdate.nameProfit,
-                    profit: piggyBankToUpdate.profit,
-                    nameExpense: piggyBankToUpdate.nameExpense,
-                    expense: piggyBankToUpdate.expense,
+                const response = await axios.patch(`https://pippo-bn7v.onrender.com/piggybank/profit/${profitId}`, {
+                    nameProfit: profitToUpdate.nameProfit,
+                    amount: profitToUpdate.amount,
                 }, {
                     headers: { Authorization: `bearer ${token}` },
                 });
@@ -250,17 +226,62 @@ export default {
                 console.error(error);
             }
         },
-        async deletePiggyBank(piggyBankId) {
+        async autoUpdateExpense(piggyBankId) {
+            clearTimeout(this.timeoutId);
+            this.timeoutId = setTimeout(() => {
+                this.updateExpense(piggyBankId)
+            }, 300);
+        },
+        async updateExpense(expenseId) {
             try {
                 const token = localStorage.getItem('token');
                 if (!token) {
                     console.error('No token found');
                     return;
                 }
-                const response = await axios.delete(`/piggybank/${piggyBankId}`, {
+                const expenseToUpdate = this.userExpenses.find(piggyBank => piggyBank._id === expenseId);
+                if (!expenseToUpdate) {
+                    console.error('Piggy bank to update not found');
+                    return;
+                }
+                const response = await axios.patch(`https://pippo-bn7v.onrender.com/piggybank/expense/${expenseId}`, {
+                    nameExpense: expenseToUpdate.nameExpense,
+                    amount: expenseToUpdate.amount,
+                }, {
                     headers: { Authorization: `bearer ${token}` },
                 });
-                this.userPiggyBanks = this.userPiggyBanks.filter(piggyBank => piggyBank._id !== piggyBankId);
+                this.fetchBalance();
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        async deleteProfit(profitId) {
+            try {
+                const token = localStorage.getItem('token');
+                if (!token) {
+                    console.error('No token found');
+                    return;
+                }
+                const response = await axios.delete(`https://pippo-bn7v.onrender.com/piggybank/profit/${profitId}`, {
+                    headers: { Authorization: `bearer ${token}` },
+                });
+                this.userProfits = this.userProfits.filter(piggyBank => piggyBank._id !== profitId);
+                this.fetchBalance()
+            } catch (error) {
+                console.error(error)
+            }
+        },
+        async deleteExpense(expenseId) {
+            try {
+                const token = localStorage.getItem('token');
+                if (!token) {
+                    console.error('No token found');
+                    return;
+                }
+                const response = await axios.delete(`https://pippo-bn7v.onrender.com/piggybank/expense/${expenseId}`, {
+                    headers: { Authorization: `bearer ${token}` },
+                });
+                this.userExpenses = this.userExpenses.filter(piggyBank => piggyBank._id !== expenseId);
                 this.fetchBalance()
             } catch (error) {
                 console.error(error)
