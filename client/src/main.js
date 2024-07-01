@@ -1,8 +1,4 @@
-// import './assets/main.css'
 import "./assets/style.css";
-
-import axios from "axios";
-axios.defaults.baseURL = "http://localhost:3000"; 
 
 import { createApp } from "vue";
 import App from "./App.vue";
