@@ -23,7 +23,7 @@
                 type="username"
                 name="username"
                 id="username"
-                placeholder="example434"
+                placeholder="Enter your username"
                 v-model="username"
                 class="bg-ghost border border-slate-800 text-slate-800 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                 required="true"
@@ -37,8 +37,8 @@
                 id="email"
                 v-model="email"
                 class="bg-ghost border border-slate-800 text-slate-800 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                placeholder="example@email.com"
-                required=""
+                placeholder="Enter your email address"
+                required="true"
               />
             </div>
             <div>
@@ -47,7 +47,7 @@
                 type="password"
                 name="password"
                 id="password"
-                placeholder="••••••••"
+                placeholder="Enter your password"
                 v-model="password"
                 class="bg-ghost border border-slate-800 text-slate-800 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                 required="true"

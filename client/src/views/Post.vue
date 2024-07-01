@@ -15,7 +15,7 @@
             <textarea
               @keyup="autoUpdate(post._id)"
               v-model="post.postContent"
-              name="post"
+              name="post" placeholder="Write your post here..."
               class="bg-ghost overflow-hidden rounded-xl text-xl px-2 py-0.5 resize-none h-full w-full outline-none text-slate-600 font-medium"
             >
             </textarea>

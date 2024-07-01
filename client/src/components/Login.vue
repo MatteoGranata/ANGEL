@@ -27,7 +27,7 @@
                 id="username"
                 v-model="username"
                 class="bg-ghost border border-slate-800 text-slate-800 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                placeholder="example434"
+                placeholder="Enter your username"
                 required="true"
               />
             </div>
@@ -38,7 +38,7 @@
                 name="password"
                 id="password"
                 v-model="password"
-                placeholder="••••••••"
+                placeholder="Enter your password"
                 class="bg-ghost border border-slate-800 text-slate-800 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                 required="true"
               />
