@@ -1,23 +1,38 @@
 <template>
-    <div class="bg-neutral-900 min-h-screen h-fit w-full">
-        <div class="flex justify-center w-full h-full mt-10">
-            <button @click="createPost"
-                class="fixed bottom-0 right-0 py-3 m-7 w-20 h-20 flex justify-center rounded-full bg-neutral-800 text-5xl ring-2 ring-inset ring-neutral-600 hover:bg-neutral-900">
-                +
-            </button>
-            <div class="flex flex-row justify-center w-full h-full mt-10">
-                <ul class="grid grid-cols-1 gap-9 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+    <div
+        class="min-h-full sm:min-h-[97vh] h-full w-[97vw] sm:w-full pt-3 pr-3 pb-4 pl-3 sm:pl-7 sm:pr-3 bg-ghost mt-5 mb-3 sm:mt-3 sm:mx-3 rounded-xl">
+        <div class="flex justify-center w-full h-full drop-shadow-3xl">
+            <div class="flex flex-row justify-center w-full h-full">
+                <ul
+                    class="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-3 3xl:grid-cols-4 h-full w-full">
                     <li v-for="post in userPosts" :key="post._id"
-                        class="flex flex-col border-2 border-neutral-600 rounded-lg w-[60vw] sm:w-[60vw] md:w-96 h-[35vh] p-2">
-                        <textarea @keyup="autoUpdate(post._id)" v-model="post.content" name="post" id="post"
-                            class="bg-neutral-800 overflow-hidden rounded-md px-2 resize-none h-full w-full outline-none"></textarea>
-                        <div class="mt-2 flex-row flex">
-                            <button @click="deletePost(post._id)"
-                                class="rounded-md px-1.5 py-0.5 text-lg mx-2 shadow-sm ring-2 ring-inset ring-neutral-600 hover:bg-neutral-800">
-                                &#128465;
-                            </button>
+                        class="flex flex-col bg-ghost rounded-xl w-full h-[35vh] p-1 shadow-lg">
+                        <textarea @keyup="autoUpdate(post._id)" v-model="post.postContent" name="post"
+                            class="bg-ghost overflow-hidden rounded-xl text-xl px-2 py-0.5 resize-none h-full w-full outline-none text-slate-600 font-medium">
+                        </textarea>
+                        <div class="flex flex-row justify-end sm:justify-between">
+                            <div class="mt-2 flex-row flex">
+                                <button @click="deletePost(post._id)"
+                                    class="rounded-md px-2 w-8 h-8 text-lg mx-2 shadow-3xl ring-2 ring-inset ring-slate-100/50 hover:bg-snow">
+                                    <img src="../assets/trashcan.png" alt="cancel">
+                                </button>
+                            </div>
+                            <div class="hidden sm:flex mt-2 flex-row flex">
+                                <button @click="pinPost(post._id)"
+                                    v-bind:class="{ 'bg-smoke ring-2 ring-slate-500/40': post.pin }"
+                                    class="rounded-md px-2 h-8 w-8 text-lg mx-2 shadow-3xl ring-2 ring-inset ring-slate-100/50 hover:bg-neutral-300/40">
+                                    <img src="../assets/pin.png" alt="pin">
+                                </button>
+                            </div>
                         </div>
                     </li>
+                    <li class="flex h-full w-full sm:w-fit justify-center items-center">
+                        <button @click="createPost"
+                            class="py-5 m-7 w-20 h-20 flex justify-center rounded-full bg-ghost text-5xl text-slate-600 ring-2 ring-inset ring-snow/70 hover:bg-snow drop-shadow-<xl">
+                            +
+                        </button>
+                    </li>
+
                 </ul>
             </div>
         </div>
@@ -29,8 +44,9 @@ import axios from 'axios';
 export default {
     data() {
         return {
-            content: '',
+            postContent: '',
             userPosts: [],
+            classeAttiva: '',
         };
     },
     mounted() {
@@ -44,7 +60,12 @@ export default {
                     console.error('No token found');
                     return;
                 }
-                const response = await axios.get('/post/', {
+                const projectID = localStorage.getItem("projectID");
+                if (!projectID) {
+                    console.error('No Project found');
+                    return;
+                }
+                const response = await axios.get(`https://pippo-bn7v.onrender.com/project/${projectID}`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 this.userPosts = response.data.posts;
@@ -59,13 +80,18 @@ export default {
                     console.error('No token found');
                     return;
                 }
-                const response = await axios.post('/post', { content: this.content }, {
+                const projectID = localStorage.getItem("projectID");
+                if (!projectID) {
+                    console.error('No Project found');
+                    return;
+                }
+                const response = await axios.post('https://pippo-bn7v.onrender.com/post', { postContent: this.postContent, projectId: projectID }, {
                     headers: { Authorization: `bearer ${token}` },
                 });
                 console.log('Post added:', response.data);
 
                 this.userPosts.push(response.data.post)
-                this.content = ''
+                this.postContent = ''
 
             } catch (error) {
                 console.error(error);
@@ -90,10 +116,35 @@ export default {
                     console.error('Post to update not found');
                     return;
                 }
-                const response = await axios.patch(`/post/${postId}`, { content: postToUpdate.content }, {
+                const response = await axios.patch(`https://pippo-bn7v.onrender.com/post/${postId}`, { postContent: postToUpdate.postContent }, {
                     headers: { Authorization: `bearer ${token}` },
                 });
 
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        async pinPost(postId) {
+            try {
+                const token = localStorage.getItem('token');
+                if (!token) {
+                    console.error('No token found');
+                    return;
+                }
+
+                const postToUpdate = this.userPosts.find(post => post._id == postId);
+                if (!postToUpdate) {
+                    console.error('Post to update not found');
+                    return;
+                }
+                if (postToUpdate.pin === true) {
+                    postToUpdate.pin = false;
+                } else if (postToUpdate.pin === false) {
+                    postToUpdate.pin = true;
+                }
+                const response = await axios.patch(`https://pippo-bn7v.onrender.com/post/${postId}`, { pin: postToUpdate.pin }, {
+                    headers: { Authorization: `bearer ${token}` },
+                });
             } catch (error) {
                 console.error(error);
             }
@@ -105,7 +156,7 @@ export default {
                     console.error('No token found');
                     return;
                 }
-                const response = await axios.delete(`/post/${postId}`, {
+                const response = await axios.delete(`https://pippo-bn7v.onrender.com/post/${postId}`, {
                     headers: { Authorization: `bearer ${token}` },
 
                 });
@@ -115,8 +166,6 @@ export default {
                 console.error(error)
             }
         },
-
-
     }
 }
 </script>
