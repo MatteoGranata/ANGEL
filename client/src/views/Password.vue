@@ -175,7 +175,6 @@ export default {
                 const response = await axios.delete(`https://angel-fq3c.onrender.com/password/${passwordId}`, {
                     headers: { Authorization: `bearer ${token}` },
                 });
-                console.log('Password removed:', response.data);
                 this.userPasswords = this.userPasswords.filter(password => password._id !== passwordId);
             } catch (error) {
                 console.error(error)
