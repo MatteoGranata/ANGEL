@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { Post } from "../models/post.js";
+import { Project } from "../models/project.js";
 
 export const createPost = async (req, res) => {
   const { content } = req.body;
@@ -8,9 +9,12 @@ export const createPost = async (req, res) => {
     const post = new Post({
       author: userId,
       content,
+      ...req.body,
     });
-
     await post.save();
+    await Project.findByIdAndUpdate(post.projectId, {
+      $push: { posts: post._id },
+    });
     res.status(201).json({ post });
   } catch (error) {
     res.status(409).json({ message: error.message });

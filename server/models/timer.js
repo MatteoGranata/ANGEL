@@ -17,6 +17,7 @@ const timerSchema = new mongoose.Schema(
     attivo: {
       type: Boolean,
     },
+    projectId: { type: mongoose.Schema.Types.ObjectId, ref: 'Project', required: true }
   },
   { timestamps: true }
 );

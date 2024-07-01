@@ -10,6 +10,7 @@ import postRoutes from "./routes/post.js";
 import passwordRoutes from "./routes/password.js";
 import timerRoutes from "./routes/timer.js";
 import piggyBankRoutes from "./routes/piggyBank.js";
+import projectRoutes from "./routes/project.js";
 
 import { authenticateToken } from "./middlewares/auth.js";
 
@@ -27,6 +28,7 @@ app.use("/post", authenticateToken, postRoutes);
 app.use("/password", authenticateToken, passwordRoutes);
 app.use("/timer", authenticateToken, timerRoutes);
 app.use("/piggybank", authenticateToken, piggyBankRoutes);
+app.use("/project", authenticateToken, projectRoutes);
 
 mongoose
   .connect(process.env.CONNECTION_URL)

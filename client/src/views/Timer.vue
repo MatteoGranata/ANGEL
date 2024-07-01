@@ -1,26 +1,61 @@
 <template>
-    <div class="login-form">
-        <h2>TIMER</h2>
-        <form @submit.prevent="createTimer">
-            <div class="form-group">
-                <label for="timer">for what:</label>
-                <input type="text" id="timer" v-model="nome" required />
+    <div class="bg-neutral-900 min-h-screen h-fit w-full">
+        <div class="flex flex-col w-full h-fit mt-10">
+            <form @submit.prevent="createTimer" class="h-fit flex justify-center">
+                <div class="mt-10 p-5 border-2 border-neutral-600 flex rounded-xl w-80">
+                    <div class="sm:col-span-4">
+                        <label for="timer" class="block text-sm font-medium leading-6 text-slate-50">FOR
+                            WHAT:</label>
+                        <div class="mt-2">
+                            <div
+                                class="flex rounded-md shadow-sm ring-1 ring-neutral-600 focus-within:ring-2 focus-within:ring-inset focus-within:ring-neutral-400 sm:max-w-md">
+                                <input type="text" v-model="nome" required
+                                    class="pl-2 outline-none block flex-1 w-60 bg-transparent py-1.5 pl-1 text-slate-50 sm:text-sm sm:leading-6" />
+                            </div>
+                            <div class="mt-3 text-end">
+                                <button type="submit"
+                                    class="rounded-md px-1.5 py-0.5 text-sm ring-2 ring-inset ring-neutral-600 hover:bg-neutral-800 text-slate-50">
+                                    ADD TIMER
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="flex flex-row justify-center h-fit mx-4 mt-10">
+                <ul class="grid grid-cols-1 gap-9 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+                    <li v-for="timer in userTimers" :key="timer._id"
+                        class="flex flex-col border-2 border-neutral-600 rounded-lg w-[60vw] sm:w-[60vw] md:w-80 lg:w-96 h-fit p-2">
+                        <div class="resize-none h-fit w-full">
+                            <textarea v-model="timer.nome"
+                                class="bg-neutral-800 overflow-hidden rounded-md pl-2 pt-0.5 mb-2 resize-none h-full w-full outline-none">
+                        </textarea>
+                        </div>
+                        <div class="flex rounded-md w-fit bg-neutral-800">
+                            <p class="p-3 bg-neutral-800 rounded-lg w-fit"> {{ formatTime(timer.tempo) }}</p>
+                        </div>
+                        <div class=" flex-wrap flex justify-around mt-4">
+                            <button v-if="!timer.attivo" @click="startTimer(timer._id)"
+                                class="rounded-md px-1.5 py-0.5 text-sm mx-2 shadow-sm ring-2 ring-inset ring-neutral-600 hover:bg-neutral-800">
+                                START
+                            </button>
+                            <button v-if="timer.attivo" @click="stopTimer(timer._id)"
+                                class="rounded-md px-1.5 py-0.5 text-sm mx-2 shadow-sm ring-2 ring-inset ring-neutral-600 hover:bg-neutral-800">
+                                STOP
+                            </button>
+                            <button @click="delteTimer(timer._id)"
+                                class="rounded-md px-1.5 py-0.5 text-lg mx-2 shadow-sm ring-2 ring-inset ring-neutral-600 hover:bg-neutral-800">
+                                &#128465;
+                            </button>
+                            <button v-if="timer.tempo != 0" @click="resetTimer(timer._id)"
+                                class="rounded-md px-1.5 py-0.5 text-sm mx-2 shadow-sm ring-2 ring-inset ring-neutral-600 hover:bg-neutral-800">
+                                RESET TIMER
+                            </button>
+                        </div>
+                    </li>
+                </ul>
             </div>
-            <button type="submit">add post</button>
-        </form>
-    </div>
-    <div class="timer-container">
-        <ul v-if="userTimers">
-            <li v-for="timer in userTimers" :key="timer._id">
-                for: {{ timer.nome }} <br>
-                Tempo: {{ formatTime(timer.tempo) }}
-                <button v-if="!timer.attivo" @click="startTimer(timer._id)">Avvia</button>
-                <button v-if="timer.attivo" @click="stopTimer(timer._id)">Arresta</button>
-                <button @click="delteTimer(timer._id)">Elimina</button>
-                <button v-if="timer.tempo != 0" @click="resetTimer(timer._id)">Reset Timer</button>
-            </li>
-        </ul>
-        <p v-else>No posts found.</p>
+        </div>
     </div>
 </template>
 
@@ -36,18 +71,16 @@ export default {
         };
     },
     mounted() {
-        this.fetchPosts();
+        this.fetchTimer();
     },
     methods: {
         formatTime(milliseconds) {
-            // Implement logic to format milliseconds to HH:MM:SS format
             const hours = Math.floor(milliseconds / (1000 * 60 * 60));
             const minutes = Math.floor((milliseconds % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((milliseconds % (1000 * 60)) / 1000);
-
             return `${hours.toString().padStart(2, '0')}h ${minutes.toString().padStart(2, '0')}m ${seconds.toString().padStart(2, '0')}s`;
         },
-        async fetchPosts() {
+        async fetchTimer() {
             try {
                 const token = localStorage.getItem('token');
                 if (!token) {
@@ -57,9 +90,7 @@ export default {
                 const response = await axios.get('/timer/', {
                     headers: { Authorization: `Bearer ${token}` },
                 });
-
                 this.userTimers = response.data.timers;
-                console.log('timer:', response.data.timers)
             } catch (error) {
                 console.error(error);
             }
@@ -76,7 +107,6 @@ export default {
                     headers: { Authorization: `bearer ${token}` },
                 });
                 console.log('timer added:', response.data);
-
                 this.userTimers.push(response.data.timer)
                 this.nome = ''
 

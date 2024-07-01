@@ -1,18 +1,18 @@
 <template>
     <div class="bg-neutral-900 min-h-screen h-fit w-full">
         <div class="flex justify-center w-full h-full mt-10">
-            <button @click="createPost"
+            <button @click="createProject"
                 class="fixed bottom-0 right-0 py-3 m-7 w-20 h-20 flex justify-center rounded-full bg-neutral-800 text-5xl ring-2 ring-inset ring-neutral-600 hover:bg-neutral-900">
                 +
             </button>
             <div class="flex flex-row justify-center w-full h-full mt-10">
                 <ul class="grid grid-cols-1 gap-9 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
-                    <li v-for="post in userPosts" :key="post._id"
+                    <li v-for="project in userProject" :key="project._id"
                         class="flex flex-col border-2 border-neutral-600 rounded-lg w-[60vw] sm:w-[60vw] md:w-96 h-[35vh] p-2">
-                        <textarea @keyup="autoUpdate(post._id)" v-model="post.content" name="post" id="post"
+                        <textarea @keyup="autoUpdate(project._id)" v-model="project.content" name="project" id="project"
                             class="bg-neutral-800 overflow-hidden rounded-md px-2 resize-none h-full w-full outline-none"></textarea>
                         <div class="mt-2 flex-row flex">
-                            <button @click="deletePost(post._id)"
+                            <button @click="deletePost(project._id)"
                                 class="rounded-md px-1.5 py-0.5 text-lg mx-2 shadow-sm ring-2 ring-inset ring-neutral-600 hover:bg-neutral-800">
                                 &#128465;
                             </button>
@@ -30,36 +30,36 @@ export default {
     data() {
         return {
             content: '',
-            userPosts: [],
+            userProject: [],
         };
     },
     mounted() {
-        this.fetchPosts();
+        this.fetchProjects();
     },
     methods: {
-        async fetchPosts() {
+        async fetchProjects() {
             try {
                 const token = localStorage.getItem('token');
                 if (!token) {
                     console.error('No token found');
                     return;
                 }
-                const response = await axios.get('/post/', {
+                const response = await axios.get('/project', {
                     headers: { Authorization: `Bearer ${token}` },
                 });
-                this.userPosts = response.data.posts;
+                this.userPosts = response.data.projects;
             } catch (error) {
                 console.error(error);
             }
         },
-        async createPost() {
+        async createProject() {
             try {
                 const token = localStorage.getItem('token');
                 if (!token) {
                     console.error('No token found');
                     return;
                 }
-                const response = await axios.post('/post', { content: this.content }, {
+                const response = await axios.post('/project', {
                     headers: { Authorization: `bearer ${token}` },
                 });
                 console.log('Post added:', response.data);
@@ -71,13 +71,13 @@ export default {
                 console.error(error);
             }
         },
-        async autoUpdate(postId) {
-            clearTimeout(this.timeoutId);
-            this.timeoutId = setTimeout(() => {
-                this.updatePost(postId)
-            }, 300);
-        },
-        async updatePost(postId) {
+        // async autoUpdate(postId) {
+        //     clearTimeout(this.timeoutId);
+        //     this.timeoutId = setTimeout(() => {
+        //         this.updatePost(postId)
+        //     }, 300);
+        // },
+        async update(postId) {
             try {
                 const token = localStorage.getItem('token');
                 if (!token) {
@@ -115,7 +115,6 @@ export default {
                 console.error(error)
             }
         },
-
 
     }
 }

@@ -1,21 +1,14 @@
 <template>
-  <nav>
-    <div v-if="!token">
-      <router-link to="/register">register</router-link>
-      -
-      <router-link to="/login">login</router-link>
-    </div>
-    <div v-else>
-      <div>
-        <button @click="logout">LOGOUT</button>
-      </div>
-    </div>
-  </nav>
   <router-view />
+  <Navbar/>
 </template>
 
 <script>
+import Navbar from './components/Navbar.vue';
 export default {
+  components: {
+    Navbar,
+  },
   data() {
     return {
       token: null,
@@ -28,7 +21,7 @@ export default {
     async getToken() {
       try {
         const token = localStorage.getItem('token');
-        this.token = token || null; // Set token to retrieved value or null
+        this.token = token || false; // Set token to retrieved value or null
       } catch (error) {
         console.error('Error fetching token:', error);
       }
@@ -38,7 +31,7 @@ export default {
         localStorage.removeItem('token');
         localStorage.removeItem('username');
         this.token = null;
-        this.$router.push('/login');
+        this.$router.push('/');
       } catch (error) {
         console.error("impossibile effettuare il logout:", error)
       } // Redirect to login after logout

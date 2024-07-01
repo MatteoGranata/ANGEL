@@ -26,6 +26,7 @@ const piggyBankSchema = new mongoose.Schema(
     balance: {
       type: Number,
     },
+    projectId: { type: mongoose.Schema.Types.ObjectId, ref: 'Project', required: true }
   },
   { timestamps: true }
 );

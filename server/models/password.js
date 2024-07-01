@@ -15,6 +15,7 @@ const passwordSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    projectId: { type: mongoose.Schema.Types.ObjectId, ref: "Project", required: true },
   },
   { timestamps: true }
 );
