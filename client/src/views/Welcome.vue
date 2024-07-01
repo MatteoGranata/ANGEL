@@ -140,7 +140,7 @@
                 <div class="md:flex md:justify-between text-slate-800">
                     <div class="mb-4 sm:mb-0">
                         <a href="#" class="flex items-center">
-                            <img src="../assets/img/logo_angel.png" class="h-6 sm:h-8 me-3" alt="Angel Logo" />
+                            <img src="../assets/img/logo_angel.png" class="h-6 w-6 sm:h-8 me-3" alt="Angel Logo" />
                             <span class="self-center text-lg sm:text-2xl font-semibold whitespace-nowrap">ANGEL</span>
                         </a>
                     </div>
