@@ -58,13 +58,11 @@ export default {
     async login() {
       try {
         const response = await axios.post("https://angel-fq3c.onrender.com/auth/login", { username: this.username, password: this.password });
-        console.log('User logged:', response.data);
         const userId = response.data.user._id
         localStorage.setItem('token', response.data.data);
         localStorage.setItem('userId', userId)
         await this.$router.push(`/homepage`)
         window.location.reload();
-
       } catch (error) {
         console.error(error)
         this.errorLogin = error.response.data.message

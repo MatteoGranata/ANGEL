@@ -70,9 +70,7 @@ export default {
        // Handle successful response
        if (response.data.status == 'okay') {
          await this.$router.push('/login');
-         console.log('registration was successful');
        } return this.errorRegister = response.data.message
-
      } catch (error) {
        console.error(error);
        this.errorRegister = error.response.data.message

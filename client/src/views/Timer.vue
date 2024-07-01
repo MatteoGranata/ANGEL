@@ -105,10 +105,7 @@ export default {
                 const response = await axios.post('https://angel-fq3c.onrender.com/timer', { nome: this.nome, projectId: projectID }, {
                     headers: { Authorization: `bearer ${token}` },
                 });
-                console.log('timer added:', response.data);
                 this.userTimers.push(response.data.timer)
-                this.nome = ''
-
             } catch (error) {
                 console.error(error);
             }
@@ -126,7 +123,6 @@ export default {
                     console.error('No token found');
                     return;
                 }
-
                 const timerToUpdate = this.userTimers.find(timer => timer._id == timerId);
                 if (!timerToUpdate) {
                     console.error('Post to update not found');
@@ -135,7 +131,6 @@ export default {
                 const response = await axios.patch(`https://angel-fq3c.onrender.com/timer/${timerId}`, { nome: timerToUpdate.nome }, {
                     headers: { Authorization: `bearer ${token}` },
                 });
-
             } catch (error) {
                 console.error(error);
             }
@@ -153,12 +148,9 @@ export default {
                     console.error('Timer to start not found');
                     return;
                 }
-
                 const response = await axios.patch(`https://angel-fq3c.onrender.com/timer/${timerId}/avvia`, { tempo: timerToUpdate.tempo }, {
                     headers: { Authorization: `bearer ${token}` },
                 });
-                console.log('timer start:', response.data);
-
                 timerToUpdate.attivo = true;
                 this.intervalId = setInterval(() => {
                     timerToUpdate.tempo += 1000; // Update in milliseconds
@@ -183,8 +175,6 @@ export default {
                 const response = await axios.patch(`https://angel-fq3c.onrender.com/timer/${timerId}/arresta`, { tempo: timerToUpdate.tempo }, {
                     headers: { Authorization: `bearer ${token}` },
                 });
-
-                console.log('timer stop:', response.data);
                 timerToUpdate.attivo = false;
                 this.timerToUpdate = clearInterval(this.intervalId)
                 this.intervalId = null;
@@ -207,11 +197,8 @@ export default {
                 }
                 const response = await axios.put(`https://angel-fq3c.onrender.com/timer/${timerId}/reset`, { tempo: timerToUpdate.tempo }, {
                     headers: { Authorization: `bearer ${token}` },
-
                 });
                 timerToUpdate.tempo = 0
-                console.log('timer reset:', response.data);
-
             } catch (error) {
                 console.error(error)
             }

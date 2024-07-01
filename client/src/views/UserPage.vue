@@ -80,7 +80,6 @@
       },
       handleFileChange(event) {
         this.selectedFile = event.target.files[0];
-        console.log(this.selectedFile)
         if (this.selectedFile.size > 5242880 &&
           ['image/jpeg', 'image/jpg', 'image/png'].includes(this.selectedFile.type)) {
           console.error("file too large max filesixe is 5mb")

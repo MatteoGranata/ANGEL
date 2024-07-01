@@ -88,11 +88,7 @@ export default {
                 const response = await axios.post('https://angel-fq3c.onrender.com/post', { postContent: this.postContent, projectId: projectID }, {
                     headers: { Authorization: `bearer ${token}` },
                 });
-                console.log('Post added:', response.data);
-
                 this.userPosts.push(response.data.post)
-                this.postContent = ''
-
             } catch (error) {
                 console.error(error);
             }
@@ -110,7 +106,6 @@ export default {
                     console.error('No token found');
                     return;
                 }
-
                 const postToUpdate = this.userPosts.find(post => post._id == postId);
                 if (!postToUpdate) {
                     console.error('Post to update not found');
@@ -131,7 +126,6 @@ export default {
                     console.error('No token found');
                     return;
                 }
-
                 const postToUpdate = this.userPosts.find(post => post._id == postId);
                 if (!postToUpdate) {
                     console.error('Post to update not found');
@@ -158,9 +152,7 @@ export default {
                 }
                 const response = await axios.delete(`https://angel-fq3c.onrender.com/post/${postId}`, {
                     headers: { Authorization: `bearer ${token}` },
-
                 });
-                console.log('Post removed:', response.data);
                 this.userPosts = this.userPosts.filter(post => post._id !== postId);
             } catch (error) {
                 console.error(error)
