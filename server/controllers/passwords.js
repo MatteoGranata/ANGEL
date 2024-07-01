@@ -1,18 +1,18 @@
 import mongoose from "mongoose";
 import { Password } from "../models/password.js";
+import { Project } from "../models/project.js";
 
 export const createPassword = async (req, res) => {
-  const { content, secret } = req.body;
   const userId = req.user.userId;
   try {
     const password = new Password({
       author: userId,
-      content,
-      secret,
+      ...req.body,
     });
-
     await password.save();
-
+    await Project.findByIdAndUpdate(password.projectId, {
+      $push: { passwords: password._id },
+    });
     res.status(201).json({ password });
   } catch (error) {
     res.status(409).json({ message: error.message });
