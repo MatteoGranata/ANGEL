@@ -32,7 +32,7 @@
                             </button>
                             <button @click="delteTimer(timer._id)"
                                 class="rounded-md px-2 w-8 h-8 text-lg mx-2 shadow-3xl ring-2 ring-inset ring-slate-100/50 hover:bg-snow">
-                                <img src="../assets/trashcan.png" alt="">
+                                <img src="../assets/icon/trashcan.png" alt="">
                             </button>
                         </div>
                     </li>

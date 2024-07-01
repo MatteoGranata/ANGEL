@@ -14,14 +14,14 @@
                             <div class="mt-2 flex-row flex">
                                 <button @click="deletePost(post._id)"
                                     class="rounded-md px-2 w-8 h-8 text-lg mx-2 shadow-3xl ring-2 ring-inset ring-slate-100/50 hover:bg-snow">
-                                    <img src="../assets/trashcan.png" alt="cancel">
+                                    <img src="../assets/icon/trashcan.png" alt="cancel">
                                 </button>
                             </div>
                             <div class="hidden sm:flex mt-2 flex-row flex">
                                 <button @click="pinPost(post._id)"
                                     v-bind:class="{ 'bg-smoke ring-2 ring-slate-500/40': post.pin }"
                                     class="rounded-md px-2 h-8 w-8 text-lg mx-2 shadow-3xl ring-2 ring-inset ring-slate-100/50 hover:bg-neutral-300/40">
-                                    <img src="../assets/pin.png" alt="pin">
+                                    <img src="../assets/icon/pin.png" alt="pin">
                                 </button>
                             </div>
                         </div>

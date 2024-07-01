@@ -36,7 +36,7 @@
                                 <div class="mt-2 flex-row flex">
                                     <button @click="deleteProfit(piggyBank._id)"
                                         class="rounded-md px-2 w-8 h-8 text-lg mx-2 shadow-3xl ring-2 ring-inset ring-slate-100/50 hover:bg-snow">
-                                        <img src="../assets/trashcan.png" alt="DELETE">
+                                        <img src="../assets/icon/trashcan.png" alt="DELETE">
                                     </button>
                                 </div>
                             </li>
@@ -74,7 +74,7 @@
                                 <div class="mt-2 flex flex-row">
                                     <button @click="deleteExpense(piggyBank._id)"
                                         class="rounded-md px-2 w-8 h-8 text-lg mx-2 shadow-3xl ring-2 ring-inset ring-slate-100/50 hover:bg-snow">
-                                        <img src="../assets/trashcan.png" alt="delete">
+                                        <img src="../assets/icon/trashcan.png" alt="delete">
                                     </button>
                                 </div>
                             </li>

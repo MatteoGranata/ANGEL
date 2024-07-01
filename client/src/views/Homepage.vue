@@ -2,7 +2,7 @@
     <div class="flex flex-col m-0 w-full min-h-screen h-full bg-snow/40 backdrop-blur-3xl">
         <nav class="flex justify-between items-center w-full h-fit p-1 lg:p-2 z-20">
             <div class="flex h-fit ml-1 lg:ml-3">
-                <img src="../assets/logo_angel.png" class="w-8 h-8 lg:w-10 lg:h-8" alt="logo-Angel">
+                <img src="../assets/img/logo_angel.png" class="w-8 h-8 lg:w-10 lg:h-8" alt="logo-Angel">
             </div>
             <div class="flex flex-col items-end lg-1 lg:mr-10" @mouseover="showDropdown = true"
                 @mouseleave="showDropdown = false">
@@ -47,7 +47,7 @@
                         <div class="flex-col flex-wrap flex ml-0.5 justify-center mr-0.5">
                             <button @click="deleteProject(project._id)"
                                 class="rounded-md px-0.5 w-6 h-6 hover:bg-snow-600/30">
-                                <img src="../assets/trashcan.png" alt="">
+                                <img src="../assets/icon/trashcan.png" alt="">
                             </button>
                         </div>
                     </li>
@@ -86,14 +86,14 @@
                             <div class="mt-2 flex-row flex">
                                 <button @click="deletePost(post._id)"
                                     class="rounded-md px-2 w-8 h-8 text-lg mx-2 shadow-3xl ring-2 ring-inset ring-slate-100/50 hover:bg-snow">
-                                    <img src="../assets/trashcan.png" alt="">
+                                    <img src="../assets/icon/trashcan.png" alt="">
                                 </button>
                             </div>
                             <div class="mt-2 flex-row flex">
                                 <button @click="pinPost(post._id)"
                                     v-bind:class="{ 'bg-smoke ring-2 ring-slate-500/40': post.pin }"
                                     class="rounded-md px-2 h-8 w-8 text-lg mx-2 shadow-3xl ring-2 ring-inset ring-slate-100/50 hover:bg-neutral-300/40">
-                                    <img src="../assets/pin.png" alt="">
+                                    <img src="../assets/icon/pin.png" alt="">
                                 </button>
                             </div>
                         </div>
@@ -133,14 +133,14 @@
                             <div class="flex-row flex mt-2">
                                 <button @click="deletePassword(password._id)"
                                     class="rounded-md px-2 w-8 h-8 text-lg mx-2 shadow-3xl ring-2 ring-inset ring-slate-100/50 hover:bg-snow">
-                                    <img src="../assets/trashcan.png" alt="">
+                                    <img src="../assets/icon/trashcan.png" alt="">
                                 </button>
                             </div>
                             <div class="mt-2 flex-row flex">
                                 <button @click="pinPassword(password._id)"
                                     v-bind:class="{ 'bg-smoke ring-2 ring-slate-500/40': password.pin }"
                                     class="rounded-md px-2 h-8 w-8 text-lg mx-2 shadow-3xl ring-2 ring-inset ring-slate-100/50 hover:bg-neutral-300/40">
-                                    <img src="../assets/pin.png" alt="">
+                                    <img src="../assets/icon/pin.png" alt="">
                                 </button>
                             </div>
                         </div>
