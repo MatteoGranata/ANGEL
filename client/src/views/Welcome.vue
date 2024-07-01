@@ -107,15 +107,15 @@
                     </div>
                     <div class="w-full px-1 sm:w-[90vw] xl:w-[60vw] mt-5 drop-shadow-3xl">
                         <img v-if="currentImage === 'password'" class="object-cover rounded-xl"
-                            src="../assets/Screen/password.png" alt="">
+                            src="../assets/img/password.png" alt="">
                         <img v-if="currentImage === 'piggybank'" class="object-cover rounded-xl"
-                            src="../assets/Screen/piggybank.png" alt="">
+                            src="../assets/img/piggybank.png" alt="">
                         <img v-if="currentImage === 'post'" class="object-cover rounded-xl"
-                            src="../assets/Screen/post.png" alt="">
+                            src="../assets/img/post.png" alt="">
                         <img v-if="currentImage === 'timer'" class="object-cover rounded-xl"
-                            src="../assets/Screen/timer.png" alt="">
+                            src="../assets/img/timer.png" alt="">
                         <img v-if="currentImage === 'project'" class="object-cover rounded-xl"
-                            src="../assets/Screen/project.png" alt="">
+                            src="../assets/img/project.png" alt="">
                     </div>
                 </div>
             </div>
