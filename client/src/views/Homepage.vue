@@ -2,7 +2,7 @@
     <div class="flex flex-col m-0 w-full min-h-screen h-full bg-snow/40 backdrop-blur-3xl">
         <nav class="flex justify-between items-center w-full h-fit p-1 lg:p-2 z-20">
             <div class="flex h-fit ml-1 lg:ml-3">
-                <img src="../assets/img/logo_angel.png" class="w-8 h-8 lg:w-10 lg:h-8" alt="logo-Angel">
+                <img src="../assets/img/logo_angel.png" class="w-8 h-8 lg:w-10 lg:h-10" alt="logo-Angel">
             </div>
             <div class="flex flex-col items-end lg-1 lg:mr-10" @mouseover="showDropdown = true"
                 @mouseleave="showDropdown = false">
