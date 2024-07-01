@@ -1,41 +1,41 @@
 <template>
-  <Navbar/>
+  <Navbar />
   <router-view />
 </template>
 
 <script>
-import {  RouterView } from 'vue-router'
+import { RouterView } from 'vue-router'
 
-import Navbar from './components/Navbar.vue';
+import Navbar from './components/Navbar.vue'
 export default {
   components: {
-    Navbar,
+    Navbar
   },
   data() {
     return {
-      token: null,
+      token: null
     }
   },
   mounted() {
-    this.getToken();
+    this.getToken()
   },
   methods: {
     async getToken() {
       try {
-        const token = localStorage.getItem('token');
-        this.token = token || false; // Set token to retrieved value or null
+        const token = localStorage.getItem('token')
+        this.token = token || false // Set token to retrieved value or null
       } catch (error) {
-        console.error('Error fetching token:', error);
+        console.error('Error fetching token:', error)
       }
     },
     async logout() {
       try {
-        localStorage.removeItem('token');
-        localStorage.removeItem('username');
-        this.token = null;
-        this.$router.push('/');
+        localStorage.removeItem('token')
+        localStorage.removeItem('username')
+        this.token = null
+        this.$router.push('/')
       } catch (error) {
-        console.error("impossibile effettuare il logout:", error)
+        console.error('impossibile effettuare il logout:', error)
       } // Redirect to login after logout
     }
   }

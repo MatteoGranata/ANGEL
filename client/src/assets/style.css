@@ -3,39 +3,39 @@
 @tailwind utilities;
 
 @layer base {
-    @font-face {
-      font-family: 'League-Spartan';
-      font-style: normal;
-      font-weight: 400;
-      font-display: swap;
-      src: url(./fonts/LeagueSpartan-Regular.woff) format('woff');
-    }
-    @font-face {
-      font-family: 'League-Ghotic';
-      font-style: normal;
-      font-weight: 400;
-      font-display: swap;
-      src: url(./fonts/LeagueGothic-Regular.woff2) format('woff2');
-    }
+  @font-face {
+    font-family: 'League-Spartan';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(./fonts/LeagueSpartan-Regular.woff) format('woff');
   }
-
-input[type=number]::-webkit-outer-spin-button,
-input[type=number]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+  @font-face {
+    font-family: 'League-Ghotic';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(./fonts/LeagueGothic-Regular.woff2) format('woff2');
+  }
 }
 
-input[type=number] {
-    -moz-appearance: textfield;
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='number'] {
+  -moz-appearance: textfield;
 }
 
 body {
-    font-family: 'League-Spartan';
-    background-image: url(./img/background.jpg); 
-    background-repeat: no-repeat;
-    background-size: cover;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    color: white;
+  font-family: 'League-Spartan';
+  background-image: url(./img/background.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: white;
 }
