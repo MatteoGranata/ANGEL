@@ -213,9 +213,7 @@ export default {
                 }
                 const response = await axios.delete(`https://angel-fq3c.onrender.com/timer/${timerId}`, {
                     headers: { Authorization: `bearer ${token}` },
-
                 });
-                console.log('Timer removed:', response.data);
                 this.userTimers = this.userTimers.filter(timer => timer._id !== timerId);
             } catch (error) {
                 console.error(error)
