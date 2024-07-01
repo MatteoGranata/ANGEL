@@ -1,13 +1,17 @@
 import express from 'express'
-import { createPiggyBank, deletePiggyBank, getBalance, getPiggyBanks, updatePiggyBank } from '../controllers/piggyBanks.js';
+import { createExpense, createProfit, deleteExpense, deleteProfit, getBalance, getExpenses, getProfits, updateExpense, updateProfit } from '../controllers/piggyBanks.js';
 
 const router = express.Router()
 
-router.post('/', createPiggyBank);
-router.get('/', getPiggyBanks);
-router.get('/balance', getBalance);
-router.patch('/:id', updatePiggyBank);
-router.delete('/:id', deletePiggyBank);
+router.post('/expense', createExpense);
+router.post('/profit', createProfit);
+router.get('/expense', getExpenses);
+router.get('/profit', getProfits);
+router.get('/:projectId/balance', getBalance);
+router.patch('/expense/:id', updateExpense);
+router.patch('/profit/:id', updateProfit);
+router.delete('/expense/:id', deleteExpense);
+router.delete('/profit/:id', deleteProfit);
 
 
 export default router
