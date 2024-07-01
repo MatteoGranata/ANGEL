@@ -1,10 +1,10 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const ProfitSchema = new mongoose.Schema(
   {
     author: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
       required: true,
     },
     nameProfit: {
@@ -16,11 +16,11 @@ const ProfitSchema = new mongoose.Schema(
     },
     projectId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Project",
+      ref: 'Project',
       required: true,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
-export const Profit = mongoose.model("Profit", ProfitSchema);
+export const Profit = mongoose.model('Profit', ProfitSchema);

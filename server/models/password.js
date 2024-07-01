@@ -1,10 +1,10 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const passwordSchema = new mongoose.Schema(
   {
     author: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
       required: true,
     },
     passwordContent: {
@@ -15,7 +15,7 @@ const passwordSchema = new mongoose.Schema(
     },
     projectId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Project",
+      ref: 'Project',
       required: true,
     },
     pin: {
@@ -23,7 +23,7 @@ const passwordSchema = new mongoose.Schema(
       default: false,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
-export const Password = mongoose.model("Password", passwordSchema);
+export const Password = mongoose.model('Password', passwordSchema);

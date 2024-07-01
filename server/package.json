@@ -10,10 +10,10 @@
     "format": "npx prettier --write ."
   },
   "husky": {
-  "hooks": {
-    "pre-commit": "pretty-quick --staged"
-  }
-},
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

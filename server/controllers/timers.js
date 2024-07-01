@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
-import { Timer } from "../models/timer.js";
-import { Project } from "../models/project.js";
+import mongoose from 'mongoose';
+import { Timer } from '../models/timer.js';
+import { Project } from '../models/project.js';
 
 export const createTimer = async (req, res) => {
   const userId = req.user.userId;
@@ -31,8 +31,7 @@ export const getTimer = async (req, res) => {
 export const updateTimer = async (req, res) => {
   const { id } = req.params;
   const data = { ...req.body };
-  if (!mongoose.Types.ObjectId.isValid(id))
-    return res.status(404).json({ message: "id non conforme con mongo" });
+  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).json({ message: 'id non conforme con mongo' });
   try {
     const timer = await Timer.findByIdAndUpdate(id, data, { new: true });
     res.status(200).json({ timer });
@@ -44,8 +43,7 @@ export const startTimer = async (req, res) => {
   const { id } = req.params;
   const data = { ...req.body };
 
-  if (!mongoose.Types.ObjectId.isValid(id))
-    return res.status(404).json({ message: "id non conforme con mongo" });
+  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).json({ message: 'id non conforme con mongo' });
   try {
     const timer = await Timer.findByIdAndUpdate(id, data, { new: true });
     res.status(200).json(timer);
@@ -56,8 +54,7 @@ export const startTimer = async (req, res) => {
 export const stopTimer = async (req, res) => {
   const { id } = req.params;
   const data = { ...req.body };
-  if (!mongoose.Types.ObjectId.isValid(id))
-    return res.status(404).json({ message: "id non conforme con mongo" });
+  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).json({ message: 'id non conforme con mongo' });
   try {
     const timer = await Timer.findByIdAndUpdate(id, data, { new: true });
     res.status(200).json(timer);
@@ -71,11 +68,11 @@ export const resetTimer = async (req, res) => {
   try {
     const timer = await Timer.findById(id);
     if (!timer) {
-      return res.status(404).send("Cronometro non trovato");
+      return res.status(404).send('Cronometro non trovato');
     }
     timer.tempo = 0;
     await timer.save();
-    res.status(200).json({ message: "timer resettato correttamente" });
+    res.status(200).json({ message: 'timer resettato correttamente' });
   } catch (error) {
     return res.status(409).json({ message: error.message });
   }
@@ -83,11 +80,10 @@ export const resetTimer = async (req, res) => {
 export const deleteTimer = async (req, res) => {
   const { id } = req.params;
 
-  if (!mongoose.Types.ObjectId.isValid(id))
-    return res.status(404).json({ message: "id non conforme con mongo" });
+  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).json({ message: 'id non conforme con mongo' });
   try {
     await Timer.findByIdAndDelete(id);
-    res.status(200).json({ message: "timer eliminato con successo" });
+    res.status(200).json({ message: 'timer eliminato con successo' });
   } catch (error) {
     res.status(404).json({ message: error.message });
   }

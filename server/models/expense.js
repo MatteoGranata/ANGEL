@@ -1,10 +1,10 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const ExpenseSchema = new mongoose.Schema(
   {
     author: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
       required: true,
     },
     nameExpense: {
@@ -12,15 +12,15 @@ const ExpenseSchema = new mongoose.Schema(
     },
     amount: {
       type: Number,
-      default:'',
+      default: '',
     },
     projectId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Project",
+      ref: 'Project',
       required: true,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
-export const Expense = mongoose.model("Expense", ExpenseSchema);
+export const Expense = mongoose.model('Expense', ExpenseSchema);

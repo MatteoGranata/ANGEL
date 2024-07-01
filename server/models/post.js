@@ -1,10 +1,10 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const postSchema = new mongoose.Schema(
   {
     author: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
       required: true,
     },
     postContent: {
@@ -12,14 +12,14 @@ const postSchema = new mongoose.Schema(
     },
     projectId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "project",
+      ref: 'project',
     },
     pin: {
       type: Boolean,
       default: false,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
-export const Post = mongoose.model("Post", postSchema);
+export const Post = mongoose.model('Post', postSchema);

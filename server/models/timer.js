@@ -1,10 +1,10 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const timerSchema = new mongoose.Schema(
   {
     author: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
       required: true,
     },
     nome: {
@@ -17,9 +17,9 @@ const timerSchema = new mongoose.Schema(
     attivo: {
       type: Boolean,
     },
-    projectId: { type: mongoose.Schema.Types.ObjectId, ref: 'Project', required: true }
+    projectId: { type: mongoose.Schema.Types.ObjectId, ref: 'Project', required: true },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
-export const Timer = mongoose.model("Timer", timerSchema);
+export const Timer = mongoose.model('Timer', timerSchema);

@@ -1,10 +1,10 @@
-import mongoose from "mongoose";
-import { User } from "./user.js";
-import { Post } from "./post.js";
-import { Password } from "./password.js";
-import { Timer } from "./timer.js";
-import { Expense } from "./expense.js";
-import { Profit } from "./profit.js";
+import mongoose from 'mongoose';
+import { User } from './user.js';
+import { Post } from './post.js';
+import { Password } from './password.js';
+import { Timer } from './timer.js';
+import { Expense } from './expense.js';
+import { Profit } from './profit.js';
 
 const projectSchema = new mongoose.Schema(
   {
@@ -53,7 +53,7 @@ const projectSchema = new mongoose.Schema(
       },
     ],
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
-export const Project = mongoose.model("Project", projectSchema);
+export const Project = mongoose.model('Project', projectSchema);

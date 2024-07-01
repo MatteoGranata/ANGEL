@@ -1,7 +1,7 @@
-import mongoose from "mongoose";
-import { Expense } from "../models/expense.js";
-import { Profit } from "../models/profit.js";
-import { Project } from "../models/project.js";
+import mongoose from 'mongoose';
+import { Expense } from '../models/expense.js';
+import { Profit } from '../models/profit.js';
+import { Project } from '../models/project.js';
 
 export const createExpense = async (req, res) => {
   const userId = req.user.userId;
@@ -14,15 +14,15 @@ export const createExpense = async (req, res) => {
     const project = await Project.findByIdAndUpdate(
       expense.projectId,
       {
-        $push: { "piggyBanks.expenses": expense._id },
+        $push: { 'piggyBanks.expenses': expense._id },
       },
       {
         new: true,
-      }
+      },
     );
 
     if (!project) {
-      return res.status(404).json({ message: "Project not found" });
+      return res.status(404).json({ message: 'Project not found' });
     }
 
     res.status(201).json({ expense });
@@ -42,15 +42,15 @@ export const createProfit = async (req, res) => {
     const project = await Project.findByIdAndUpdate(
       profit.projectId,
       {
-        $push: { "piggyBanks.profits": profit._id },
+        $push: { 'piggyBanks.profits': profit._id },
       },
       {
         new: true,
-      }
+      },
     );
 
     if (!project) {
-      return res.status(404).json({ message: "Project not found" });
+      return res.status(404).json({ message: 'Project not found' });
     }
 
     res.status(201).json({ profit });
@@ -83,8 +83,7 @@ export const updateExpense = async (req, res) => {
   const { id } = req.params;
   const data = { ...req.body };
 
-  if (!mongoose.Types.ObjectId.isValid(id))
-    return res.status(404).json({ message: "Invalid ID format" });
+  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).json({ message: 'Invalid ID format' });
   try {
     const expense = await Expense.findByIdAndUpdate(id, data, {
       new: true,
@@ -99,8 +98,7 @@ export const updateProfit = async (req, res) => {
   const { id } = req.params;
   const data = { ...req.body };
 
-  if (!mongoose.Types.ObjectId.isValid(id))
-    return res.status(404).json({ message: "Invalid ID format" });
+  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).json({ message: 'Invalid ID format' });
   try {
     const profit = await Profit.findByIdAndUpdate(id, data, {
       new: true,
@@ -114,11 +112,10 @@ export const updateProfit = async (req, res) => {
 export const deleteExpense = async (req, res) => {
   const { id } = req.params;
 
-  if (!mongoose.Types.ObjectId.isValid(id))
-    return res.status(404).json({ message: "Invalid ID format" });
+  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).json({ message: 'Invalid ID format' });
   try {
     await Expense.findByIdAndDelete(id);
-    res.status(200).json({ message: "Expense deleted successfully" });
+    res.status(200).json({ message: 'Expense deleted successfully' });
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
@@ -127,11 +124,10 @@ export const deleteExpense = async (req, res) => {
 export const deleteProfit = async (req, res) => {
   const { id } = req.params;
 
-  if (!mongoose.Types.ObjectId.isValid(id))
-    return res.status(404).json({ message: "Invalid ID format" });
+  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).json({ message: 'Invalid ID format' });
   try {
     await Profit.findByIdAndDelete(id);
-    res.status(200).json({ message: "Profit deleted successfully" });
+    res.status(200).json({ message: 'Profit deleted successfully' });
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
@@ -140,8 +136,8 @@ export const deleteProfit = async (req, res) => {
 export const getBalance = async (req, res) => {
   try {
     const project = await Project.findById(req.params.projectId)
-      .populate("piggyBanks.expenses")
-      .populate("piggyBanks.profits");
+      .populate('piggyBanks.expenses')
+      .populate('piggyBanks.profits');
 
     let totalExpenses = 0;
     let totalProfits = 0;
@@ -158,7 +154,7 @@ export const getBalance = async (req, res) => {
       });
     }
 
-      const total = totalProfits - totalExpenses;
+    const total = totalProfits - totalExpenses;
 
     project.piggyBanks.total = total;
     await project.save();

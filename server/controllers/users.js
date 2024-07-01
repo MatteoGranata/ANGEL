@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import { User } from "../models/user.js";
+import mongoose from 'mongoose';
+import { User } from '../models/user.js';
 
 export const getAllUsers = async (req, res) => {
   try {
@@ -12,8 +12,7 @@ export const getAllUsers = async (req, res) => {
 export const getUserByID = async (req, res) => {
   const { id } = req.params;
 
-  if (!mongoose.Types.ObjectId.isValid(id))
-    return res.status(404).json({ message: "id non conforme con mongo" });
+  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).json({ message: 'id non conforme con mongo' });
   try {
     const user = await User.findById(id);
     res.status(200).json(user);
@@ -34,11 +33,10 @@ export const insertUser = async (req, res) => {
 export const deleteUserByID = async (req, res) => {
   const { id } = req.params;
 
-  if (!mongoose.Types.ObjectId.isValid(id))
-    return res.status(404).json({ message: "id non conforme con mongo" });
+  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).json({ message: 'id non conforme con mongo' });
   try {
     await User.findByIdAndDelete(id);
-    res.status(200).json({ message: "utente eliminato con successo" });
+    res.status(200).json({ message: 'utente eliminato con successo' });
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
@@ -47,8 +45,7 @@ export const updateUserByID = async (req, res) => {
   const { id } = req.params;
   const data = { ...req.body };
 
-  if (!mongoose.Types.ObjectId.isValid(id))
-    return res.status(404).json({ message: "id non conforme con mongo" });
+  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).json({ message: 'id non conforme con mongo' });
   try {
     const user = await User.findByIdAndUpdate(id, data, { new: true });
     res.status(200).json(user);
@@ -63,29 +60,28 @@ export const insertImageUser = async (req, res) => {
 
   // Validate user ID format
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(400).json({ message: "Invalid user ID format" }); // Use 400 for bad request
+    return res.status(400).json({ message: 'Invalid user ID format' }); // Use 400 for bad request
   }
 
   try {
     // Validate avatar file existence (optional, based on your requirements)
     if (!avatar) {
-      return res.status(400).json({ message: "Only JPEG and PNG files are accepted."});
+      return res.status(400).json({ message: 'Only JPEG and PNG files are accepted.' });
     }
 
     // Update user with avatar information
     const updatedUser = await User.findByIdAndUpdate(
       id,
       { ...data, avatar: avatar.path }, // Correctly add avatar path
-      { new: true }
+      { new: true },
     );
 
     if (!updatedUser) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ message: 'User not found' });
     }
 
     res.status(200).json(updatedUser);
   } catch (error) {
-    res.status(400).json({ message: error.message})
+    res.status(400).json({ message: error.message });
   }
 };
-
