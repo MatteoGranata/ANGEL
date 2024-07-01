@@ -3,12 +3,10 @@ import { Post } from "../models/post.js";
 import { Project } from "../models/project.js";
 
 export const createPost = async (req, res) => {
-  const { content } = req.body;
   const userId = req.user.userId;
   try {
     const post = new Post({
       author: userId,
-      content,
       ...req.body,
     });
     await post.save();
@@ -24,7 +22,6 @@ export const getPosts = async (req, res) => {
   const userId = req.user.userId;
   try {
     const posts = await Post.find({ author: userId });
-
     res.status(200).json({ posts });
   } catch (error) {
     res.status(404).json({ message: error.message });
