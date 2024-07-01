@@ -1,52 +1,19 @@
 <template>
-    <nav class="flex justify-end w-full h-fit p-2 fixed left-0 top-0 text-slate-50 bg-neutral-900">
-        <div v-if="!token" class="">
-            <div class="flex justify-center m-0 p-2 border w-40">
-                <router-link to="/register">register</router-link>
-                <p class="px-1">/</p>
-                <router-link to="/login">Sign in</router-link>
+    <nav v-show="$route.path === '/'">
+        <div class="flex justify-between w-full h-fit p-0 sm:p-2 text-slate-800 bg-ghost">
+            <div class="flex h-fit ml-3 mt-2">
+                <img src="../assets/logo_angel.png" class="w-6 h-6 pb-2 sm:pb-0 sm:w-8 sm:h-8" alt="logo-Angel">
             </div>
-        </div>
-        <div v-else class="mx-4 my-1.5">
-            <div class="">
-                <button @click="logout"><img width="30" height="30"
-                        src="https://img.icons8.com/fluency-systems-filled/96/F5F5F5/exit.png" alt="logout" />
-                </button>
+            <div class="flex justify-between m-0 p-1 sm:p-2 sm:w-48 text:md sm:text-lg items-center flex-wrap">
+                <router-link to="/login" class="pt-0.5 sm:pt-1 px-1 font-bold">Sign In</router-link>
+                <router-link to="/register"
+                    class="bg-slate-800 text-ghost rounded-md pt-0.5 sm:pt-1 px-1.5 hover:bg-slate-900">Get Starter</router-link>
             </div>
         </div>
     </nav>
-
 </template>
 
 <script>
 export default {
-    data() {
-        return {
-            token: null,
-        }
-    },
-    mounted() {
-        this.getToken();
-    },
-    methods: {
-        async getToken() {
-            try {
-                const token = localStorage.getItem('token');
-                this.token = token || false; // Set token to retrieved value or null
-            } catch (error) {
-                console.error('Error fetching token:', error);
-            }
-        },
-        async logout() {
-            try {
-                localStorage.removeItem('token');
-                localStorage.removeItem('username');
-                this.token = null;
-                this.$router.push('/');
-            } catch (error) {
-                console.error("impossibile effettuare il logout:", error)
-            } // Redirect to login after logout
-        }
-    }
 }
 </script>
