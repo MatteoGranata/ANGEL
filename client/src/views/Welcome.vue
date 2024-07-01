@@ -7,7 +7,7 @@
         <h1
           class="font-[League-Ghotic] w-full h-fit felx content-center uppercase tracking-wide h-fit sm:text-[8vh] text-5xl"
         >
-        Organize, Monitor, Achieve Your Goals.
+          Organize, Monitor, Achieve Your Goals.
         </h1>
         <p class="flex w-full sm:w-[45vw] justify-center mt-[3vw] px-2 sm:text-3xl mb-20 text-lg">
           Your Guide to Managing Time and Tasks.
@@ -24,7 +24,7 @@
         <h1
           class="font-[League-Ghotic] font-bold w-fit sm:text-6xl lg:text-8xl text-6xl mb-[5vw] text-center uppercase"
         >
-        How to Use Angel?
+          How to Use Angel?
         </h1>
         <div
           class="w-full h-fit px-2 sm:p-0 sm:w-[80vw] lg:w-[70vw] xl:w-[50vw] flex flex-wrap justify-evenly mb-5"
@@ -100,19 +100,29 @@
             class="flex rounded-lg bg-ghost text-md sm:text-xl text-slate-800 shadow-lg p-4 mx-2 sm:mx-20"
           >
             <p v-if="currentImage === 'timer'" class="m-1">
-              Use our timer to track the time spent on each task. Simply start the timer at the beginning of the task and stop it when you are finished. You can also pause the timer and resume it the next day, keeping track of the total time period.
+              Use our timer to track the time spent on each task. Simply start the timer at the
+              beginning of the task and stop it when you are finished. You can also pause the timer
+              and resume it the next day, keeping track of the total time period.
             </p>
             <p v-if="currentImage === 'piggybank'" class="m-1">
-              Keep track of your project expenses and income with ease. Add each transaction to get a clear overview of your project's finances or your total finances.
+              Keep track of your project expenses and income with ease. Add each transaction to get
+              a clear overview of your project's finances or your total finances.
             </p>
             <p v-if="currentImage === 'password'" class="m-1">
-              Securely save your passwords for each account or for accounts created specifically for your projects. Angel keeps your information safe and easily accessible.
+              Securely save your passwords for each account or for accounts created specifically for
+              your projects. Angel keeps your information safe and easily accessible.
             </p>
             <p v-if="currentImage === 'post'" class="m-1">
-              Add personal notes to remind yourself of tasks to do, jot down important ideas, or plan upcoming activities. Notes help you keep everything well-organized and within reach.
+              Add personal notes to remind yourself of tasks to do, jot down important ideas, or
+              plan upcoming activities. Notes help you keep everything well-organized and within
+              reach.
             </p>
             <p v-if="currentImage === 'project'" class="m-1">
-              When you log in to Angel, the first screen you will see is the homepage. Here you will find an overview of your projects, pinned posts, and passwords. The homepage is designed to give you quick and easy access to the most important information. You can create new projects or access existing ones. Each project groups various features that will help you better manage your time and tasks.
+              When you log in to Angel, the first screen you will see is the homepage. Here you will
+              find an overview of your projects, pinned posts, and passwords. The homepage is
+              designed to give you quick and easy access to the most important information. You can
+              create new projects or access existing ones. Each project groups various features that
+              will help you better manage your time and tasks.
             </p>
           </div>
           <div class="w-full px-1 sm:w-[90vw] xl:w-[60vw] mt-5 drop-shadow-3xl">
@@ -155,10 +165,11 @@
         <h1
           class="font-[League-Ghotic] font-bold w-fit sm:text-8xl text-6xl mb-[2vw] text-center uppercase"
         >
-        Sign Up Now!
+          Sign Up Now!
         </h1>
         <p class="flex text-lg sm:text-xl px-2 w-full">
-          To start using Angel, sign up and create your first project. We're excited to help you achieve your goals with greater efficiency and organization.
+          To start using Angel, sign up and create your first project. We're excited to help you
+          achieve your goals with greater efficiency and organization.
         </p>
         <router-link
           to="/register"
@@ -208,7 +219,8 @@
           </div>
         </div>
         <p class="text-slate-800 text-sm mt-3 sm:mt-6">
-          Angel has been developed solely for educational purposes as a project for Start2Impact and is non-profit. I hope the app is useful to you and helps improve your productivity.
+          Angel has been developed solely for educational purposes as a project for Start2Impact and
+          is non-profit. I hope the app is useful to you and helps improve your productivity.
         </p>
         <hr class="mb-6 border-slate-800 sm:mx-auto" />
         <div class="flex justify-between items-center">
