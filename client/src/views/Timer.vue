@@ -1,57 +1,46 @@
 <template>
-    <div class="bg-neutral-900 min-h-screen h-fit w-full">
-        <div class="flex flex-col w-full h-fit mt-10">
-            <form @submit.prevent="createTimer" class="h-fit flex justify-center">
-                <div class="mt-10 p-5 border-2 border-neutral-600 flex rounded-xl w-80">
-                    <div class="sm:col-span-4">
-                        <label for="timer" class="block text-sm font-medium leading-6 text-slate-50">FOR
-                            WHAT:</label>
-                        <div class="mt-2">
-                            <div
-                                class="flex rounded-md shadow-sm ring-1 ring-neutral-600 focus-within:ring-2 focus-within:ring-inset focus-within:ring-neutral-400 sm:max-w-md">
-                                <input type="text" v-model="nome" required
-                                    class="pl-2 outline-none block flex-1 w-60 bg-transparent py-1.5 pl-1 text-slate-50 sm:text-sm sm:leading-6" />
-                            </div>
-                            <div class="mt-3 text-end">
-                                <button type="submit"
-                                    class="rounded-md px-1.5 py-0.5 text-sm ring-2 ring-inset ring-neutral-600 hover:bg-neutral-800 text-slate-50">
-                                    ADD TIMER
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
-            <div class="flex flex-row justify-center h-fit mx-4 mt-10">
-                <ul class="grid grid-cols-1 gap-9 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+    <div
+        class="min-h-full sm:min-h-[97vh] h-full w-[97vw] sm:w-full pt-3 pr-3 pb-4 pl-3 sm:pl-7 sm:pr-3 bg-ghost mt-5 mb-3 sm:mt-3 sm:mx-3 rounded-xl text-lg">
+        <div class="flex justify-center w-full h-full drop-shadow-3xl">
+            <div class="flex flex-row justify-center w-full h-full">
+                <ul class="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 3xl:grid-cols-4 h-full w-full">
                     <li v-for="timer in userTimers" :key="timer._id"
-                        class="flex flex-col border-2 border-neutral-600 rounded-lg w-[60vw] sm:w-[60vw] md:w-80 lg:w-96 h-fit p-2">
+                    class="flex flex-col bg-ghost rounded-xl w-full h-fit p-1 shadow-lg">
                         <div class="resize-none h-fit w-full">
-                            <textarea v-model="timer.nome"
-                                class="bg-neutral-800 overflow-hidden rounded-md pl-2 pt-0.5 mb-2 resize-none h-full w-full outline-none">
+                            <textarea @keyup="autoUpdate(timer._id)" v-model="timer.nome" name="timer"
+                                placeholder="Name Timer..." rows="1"
+                                class="bg-ghost overflow-hidden rounded-xl px-2 py-0.5 resize-none h-full w-full outline-none text-slate-600 font-medium">
+
                         </textarea>
                         </div>
-                        <div class="flex rounded-md w-fit bg-neutral-800">
-                            <p class="p-3 bg-neutral-800 rounded-lg w-fit"> {{ formatTime(timer.tempo) }}</p>
+                        <div class="flex rounded-md w-fit">
+                            <p class="p-3 bg-ghost rounded-lg w-fit text-slate-800 font-medium"> {{
+                                formatTime(timer.tempo) }}</p>
                         </div>
-                        <div class=" flex-wrap flex justify-around mt-4">
+                        <div class="flex-row flex-wrap flex justify-between mt-4">
                             <button v-if="!timer.attivo" @click="startTimer(timer._id)"
-                                class="rounded-md px-1.5 py-0.5 text-sm mx-2 shadow-sm ring-2 ring-inset ring-neutral-600 hover:bg-neutral-800">
+                                class="text-slate-800 font-medium rounded-md px-1.5 py-0.5 mx-2 shadow-lg ring-2 ring-inset ring-slate-100/50 hover:bg-snow">
                                 START
                             </button>
                             <button v-if="timer.attivo" @click="stopTimer(timer._id)"
-                                class="rounded-md px-1.5 py-0.5 text-sm mx-2 shadow-sm ring-2 ring-inset ring-neutral-600 hover:bg-neutral-800">
+                                class="text-slate-800 font-medium rounded-md px-1.5 py-0.5 mx-2 shadow-lg ring-2 ring-inset ring-slate-100/50 hover:bg-snow">
                                 STOP
                             </button>
-                            <button @click="delteTimer(timer._id)"
-                                class="rounded-md px-1.5 py-0.5 text-lg mx-2 shadow-sm ring-2 ring-inset ring-neutral-600 hover:bg-neutral-800">
-                                &#128465;
-                            </button>
                             <button v-if="timer.tempo != 0" @click="resetTimer(timer._id)"
-                                class="rounded-md px-1.5 py-0.5 text-sm mx-2 shadow-sm ring-2 ring-inset ring-neutral-600 hover:bg-neutral-800">
+                                class="text-slate-800 font-medium rounded-md px-1.5 py-0.5 mx-2 shadow-lg ring-2 ring-inset ring-slate-100/50 hover:bg-snow">
                                 RESET TIMER
                             </button>
+                            <button @click="delteTimer(timer._id)"
+                                class="rounded-md px-2 w-8 h-8 text-lg mx-2 shadow-3xl ring-2 ring-inset ring-slate-100/50 hover:bg-snow">
+                                <img src="../assets/trashcan.png" alt="">
+                            </button>
                         </div>
+                    </li>
+                    <li class="flex h-full w-full sm:w-fit justify-center items-center">
+                        <button @click="createTimer"
+                            class="py-5 m-7 w-20 h-20 flex justify-center rounded-full bg-ghost text-5xl text-slate-600 ring-2 ring-inset ring-snow/70 hover:bg-snow drop-shadow-<xl">
+                            +
+                        </button>
                     </li>
                 </ul>
             </div>
@@ -87,7 +76,12 @@ export default {
                     console.error('No token found');
                     return;
                 }
-                const response = await axios.get('/timer/', {
+                const projectID = localStorage.getItem("projectID");
+                if (!projectID) {
+                    console.error('No Project found');
+                    return;
+                }
+                const response = await axios.get(`https://pippo-bn7v.onrender.com/project/${projectID}`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 this.userTimers = response.data.timers;
@@ -103,12 +97,44 @@ export default {
                     console.error('No token found');
                     return;
                 }
-                const response = await axios.post('/timer', { nome: this.nome }, {
+                const projectID = localStorage.getItem("projectID");
+                if (!projectID) {
+                    console.error('No Project found');
+                    return;
+                }
+                const response = await axios.post('https://pippo-bn7v.onrender.com/timer', { nome: this.nome, projectId: projectID }, {
                     headers: { Authorization: `bearer ${token}` },
                 });
                 console.log('timer added:', response.data);
                 this.userTimers.push(response.data.timer)
                 this.nome = ''
+
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        async autoUpdate(timerId) {
+            clearTimeout(this.timeoutId);
+            this.timeoutId = setTimeout(() => {
+                this.updateTimer(timerId)
+            }, 300);
+        },
+        async updateTimer(timerId) {
+            try {
+                const token = localStorage.getItem('token');
+                if (!token) {
+                    console.error('No token found');
+                    return;
+                }
+
+                const timerToUpdate = this.userTimers.find(timer => timer._id == timerId);
+                if (!timerToUpdate) {
+                    console.error('Post to update not found');
+                    return;
+                }
+                const response = await axios.patch(`https://pippo-bn7v.onrender.com/timer/${timerId}`, { nome: timerToUpdate.nome }, {
+                    headers: { Authorization: `bearer ${token}` },
+                });
 
             } catch (error) {
                 console.error(error);
@@ -128,7 +154,7 @@ export default {
                     return;
                 }
 
-                const response = await axios.patch(`/timer/${timerId}/avvia`, { tempo: timerToUpdate.tempo }, {
+                const response = await axios.patch(`https://pippo-bn7v.onrender.com/timer/${timerId}/avvia`, { tempo: timerToUpdate.tempo }, {
                     headers: { Authorization: `bearer ${token}` },
                 });
                 console.log('timer start:', response.data);
@@ -154,7 +180,7 @@ export default {
                     console.error('Timer to stop not found');
                     return;
                 }
-                const response = await axios.patch(`/timer/${timerId}/arresta`, { tempo: timerToUpdate.tempo }, {
+                const response = await axios.patch(`https://pippo-bn7v.onrender.com/timer/${timerId}/arresta`, { tempo: timerToUpdate.tempo }, {
                     headers: { Authorization: `bearer ${token}` },
                 });
 
@@ -179,7 +205,7 @@ export default {
                     console.error('Timer to stop not found');
                     return;
                 }
-                const response = await axios.put(`/timer/${timerId}/reset`, { tempo: timerToUpdate.tempo }, {
+                const response = await axios.put(`https://pippo-bn7v.onrender.com/timer/${timerId}/reset`, { tempo: timerToUpdate.tempo }, {
                     headers: { Authorization: `bearer ${token}` },
 
                 });
@@ -198,7 +224,7 @@ export default {
                     console.error('No token found');
                     return;
                 }
-                const response = await axios.delete(`/timer/${timerId}`, {
+                const response = await axios.delete(`https://pippo-bn7v.onrender.com/timer/${timerId}`, {
                     headers: { Authorization: `bearer ${token}` },
 
                 });
