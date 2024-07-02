@@ -1,5 +1,5 @@
 
-![ANGEL Logo](https://i.postimg.cc/YSYSNL9z/logo-angel.png "10x10") 
+![ANGEL Logo](https://i.postimg.cc/8cq3bcsL/logo-angel.png) 
 
 # Angel
 
