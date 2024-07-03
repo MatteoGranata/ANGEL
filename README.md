@@ -84,6 +84,8 @@ Install dependencies
 
 Rename the .env.example file to .env and insert inside it the links to your mongodb database, a port (if you start it locally) and the JWT_SECRET
 
+Make sure to change the HTTP of the requests to your host in the client
+
 Start the server 
 
 ```bash
