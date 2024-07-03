@@ -13,6 +13,7 @@
       </div>
       <img src="../assets/video/Animation_logo_Angel.gif" class="w-40 sm:w-60 mb-20 sm:mb-80" alt="Gif-Logo" />
     </section>
+    <!-- tabbed menu -->
     <section class="w-full flex h-fit mb-10 sm:mb-20 text-slate-800">
       <div class="flex flex-col items-center h-full w-full">
         <h1
@@ -80,18 +81,17 @@
             </p>
           </div>
           <div class="w-full px-1 sm:w-[90vw] xl:w-[60vw] mt-5 drop-shadow-3xl">
-            <img v-if="currentImage === 'password'" class="object-cover rounded-xl" src="../assets/img/password.png"
-              alt="" />
-            <img v-if="currentImage === 'piggybank'" class="object-cover rounded-xl" src="../assets/img/piggybank.png"
-              alt="" />
-            <img v-if="currentImage === 'post'" class="object-cover rounded-xl" src="../assets/img/post.png" alt="" />
-            <img v-if="currentImage === 'timer'" class="object-cover rounded-xl" src="../assets/img/timer.png" alt="" />
-            <img v-if="currentImage === 'project'" class="object-cover rounded-xl" src="../assets/img/project.png"
-              alt="" />
+            <img v-if="currentImage === 'password'" class="object-cover rounded-xl" src="../assets/img/password.png" />
+            <img v-if="currentImage === 'piggybank'" class="object-cover rounded-xl"
+              src="../assets/img/piggybank.png" />
+            <img v-if="currentImage === 'post'" class="object-cover rounded-xl" src="../assets/img/post.png" />
+            <img v-if="currentImage === 'timer'" class="object-cover rounded-xl" src="../assets/img/timer.png" />
+            <img v-if="currentImage === 'project'" class="object-cover rounded-xl" src="../assets/img/project.png" />
           </div>
         </div>
       </div>
     </section>
+    <!-- tabbed menu -->
     <section class="w-full flex h-fit mb-20 justify-center text-slate-800">
       <div class="flex flex-col items-center text-center h-fit w-full sm:w-[50vw]">
         <h1 class="font-[League-Ghotic] font-bold w-fit sm:text-8xl text-6xl mb-[2vw] text-center uppercase">

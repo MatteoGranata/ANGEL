@@ -116,7 +116,6 @@ export default {
       try {
         const token = localStorage.getItem('token') // Get token from local storage
         if (!token) {
-          // Handle no token case (e.g., redirect to login)
           console.error('No token found')
           return
         }
@@ -170,7 +169,6 @@ export default {
       try {
         const token = localStorage.getItem('token') // Get token from local storage
         if (!token) {
-          // Handle no token case (e.g., redirect to login)
           console.error('No token found')
           return
         }
@@ -198,7 +196,6 @@ export default {
       try {
         const token = localStorage.getItem('token') // Get token from local storage
         if (!token) {
-          // Handle no token case (e.g., redirect to login)
           console.error('No token found')
           return
         }
@@ -225,7 +222,6 @@ export default {
       try {
         const token = localStorage.getItem('token') // Get token from local storage
         if (!token) {
-          // Handle no token case (e.g., redirect to login)
           console.error('No token found')
           return
         }
@@ -250,7 +246,6 @@ export default {
       try {
         const token = localStorage.getItem('token') // Get token from local storage
         if (!token) {
-          // Handle no token case (e.g., redirect to login)
           console.error('No token found')
           return
         }

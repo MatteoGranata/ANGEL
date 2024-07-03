@@ -4,6 +4,7 @@
       <div class="flex h-fit ml-1 lg:ml-3">
         <img src="../assets/img/logo_angel.png" class="w-8 h-8 lg:w-10 lg:h-10" alt="logo-Angel" />
       </div>
+      <!-- dropdown user menu -->
       <div class="flex flex-col items-end lg-1 lg:mr-10" @mouseover="showDropdown = true"
         @mouseleave="showDropdown = false">
         <img v-if="user.avatar" id="avatarButton" type="button" data-dropdown-toggle="userDropdown"
@@ -14,7 +15,6 @@
           class="w-10 h-10 lg:w-16 lg:h-16 rounded-full bg-gray-300 text-gray-500 flex items-center justify-center shadow-lg">
           <i class="fas fa-user text-2xl"></i>
         </div>
-
         <div v-if="showDropdown" id="userDropdown"
           class="absolute top-12 lg:top-16 bg-ghost backdrop-blur-sm divide-y divide-snow rounded-lg shadow-lg w-44 text-md lg:text-xl">
           <div class="px-4 py-3">
@@ -36,8 +36,10 @@
           </button>
         </div>
       </div>
+      <!-- dropdown user menu -->
     </nav>
     <div class="flex flex-col sm:flex-row h-fit w-full">
+      <!-- project list -->
       <ul class="min-h-[94vh] lg:min-h-[91vh] h-full items-center w-full sm:w-fit flex flex-col justify-between">
         <div class="flex justify-center flex-col items-center mx-2">
           <li v-for="project in userProjects" :key="project._id"
@@ -50,11 +52,13 @@
               </button>
             </div>
           </li>
+          <!-- Button to create a new project -->
           <button @click="createProject"
             class="m-4 w-10 py-1.5 text-2xl h-10 flex justify-center rounded-full bg-ghost text-slate-600 text-3xl ring-2 ring-inset ring-snow/70 hover:bg-snow/80 shadow-lg">
             +
           </button>
         </div>
+        <!-- Help message section -->
         <div class="mb-3 z-50">
           <div class="mx-4 my-1.5 flex">
             <div class="w-fit justify-center flex flex-col items-center" @mouseover="showMessage = true"
@@ -70,8 +74,10 @@
           </div>
         </div>
       </ul>
+      <!-- Pinned posts and passwords section -->
       <div
         class="hidden sm:grid grid-cols-1 md:grid-cols-2 w-full min-h-[88vh] h-fit text-slate-800 rounded-xl bg-ghost mr-6 text-2xl">
+        <!-- post section-->
         <ul
           class="grid grid-cols-1 gap-5 xl:grid-cols-2 p-3 rounded-xl mr-2 h-fit justify-items-center drop-shadow-3xl">
           <li v-for="post in userPostsPinned" :key="post._id" v-show="post.pin !== false"
@@ -95,6 +101,7 @@
             </div>
           </li>
         </ul>
+        <!-- Password section -->
         <ul
           class="grid grid-cols-1 lg:grid-cols-2 gap-5 justify-items-center w-full h-fit justify-between p-3 ml-2 sm:mt-20 md:mt-0">
           <li v-for="password in userPasswordsPinned" :key="password._id" v-show="password.pin !== false"
@@ -155,7 +162,7 @@ export default {
       userPasswordsPinned: [],
       userPostsPinned: [],
       showDropdown: false,
-      baseUrl: 'https://angel-fq3c.onrender.com/',
+      baseUrl: 'https://angel-fq3c.onrender.com/', // or baseUrl: 'http://localhost:yourport/' for local server
       showMessage: false
     }
   },
@@ -196,7 +203,7 @@ export default {
           console.error('No userId found')
           return
         }
-        const response = await axios.get(`https://angel-fq3c.onrender.com/users/${userId}`, {
+        const response = await axios.get(`https://angel-fq3c.onrender.com/users/${userId}`, { // remove https://...  if server run local
           headers: { Authorization: `bearer ${token}` }
         })
         this.user = response.data
@@ -223,7 +230,7 @@ export default {
           console.error('No token found')
           return
         }
-        const response = await axios.get('https://angel-fq3c.onrender.com/password', {
+        const response = await axios.get('https://angel-fq3c.onrender.com/password', { // remove https://...  if server run local
           headers: { Authorization: `bearer ${token}` }
         })
         this.userPasswordsPinned = response.data.passwords
@@ -246,7 +253,7 @@ export default {
           return
         }
         const response = await axios.patch(
-          `https://angel-fq3c.onrender.com/password/${passwordId}`,
+          `https://angel-fq3c.onrender.com/password/${passwordId}`, // remove https://...  if server run local
           { passwordContent: passwordToUpdate.passwordContent, secret: passwordToUpdate.secret },
           {
             headers: { Authorization: `bearer ${token}` }
@@ -276,7 +283,7 @@ export default {
           passwordToUpdate.pin = true
         }
         const response = await axios.patch(
-          `https://angel-fq3c.onrender.com/password/${passwordId}`,
+          `https://angel-fq3c.onrender.com/password/${passwordId}`, // remove https://...  if server run local
           { pin: passwordToUpdate.pin },
           {
             headers: { Authorization: `bearer ${token}` }
@@ -294,7 +301,7 @@ export default {
           return
         }
         const response = await axios.delete(
-          `https://angel-fq3c.onrender.com/password/${passwordId}`,
+          `https://angel-fq3c.onrender.com/password/${passwordId}`, // remove https://...  if server run local
           {
             headers: { Authorization: `bearer ${token}` }
           }
@@ -316,7 +323,7 @@ export default {
           console.error('No token found')
           return
         }
-        const response = await axios.get('https://angel-fq3c.onrender.com/post', {
+        const response = await axios.get('https://angel-fq3c.onrender.com/post', { // remove https://...  if server run local
           headers: { Authorization: `bearer ${token}` }
         })
         this.userPostsPinned = response.data.posts
@@ -337,7 +344,7 @@ export default {
           return
         }
         const response = await axios.patch(
-          `https://angel-fq3c.onrender.com/post/${postId}`,
+          `https://angel-fq3c.onrender.com/post/${postId}`, // remove https://...  if server run local
           { postContent: postToUpdate.postContent },
           {
             headers: { Authorization: `bearer ${token}` }
@@ -365,8 +372,8 @@ export default {
           postToUpdate.pin = true
         }
         const response = await axios.patch(
-          `https://angel-fq3c.onrender.com/post/${postId}`,
-          { pin: postToUpdate.pin },
+          `https://angel-fq3c.onrender.com/post/${postId}`, // remove https://...  if server run local
+          { pin: postToUpdate.pin }, 
           {
             headers: { Authorization: `bearer ${token}` }
           }
@@ -382,7 +389,7 @@ export default {
           console.error('No token found')
           return
         }
-        const response = await axios.delete(`https://angel-fq3c.onrender.com/post/${postId}`, {
+        const response = await axios.delete(`https://angel-fq3c.onrender.com/post/${postId}`, { // remove https://...  if server run local
           headers: { Authorization: `bearer ${token}` }
         })
         this.userPostsPinned = this.userPostsPinned.filter((post) => post._id !== postId)
@@ -397,7 +404,7 @@ export default {
           console.error('No token found')
           return
         }
-        const response = await axios.get('https://angel-fq3c.onrender.com/project/', {
+        const response = await axios.get('https://angel-fq3c.onrender.com/project/', { // remove https://...  if server run local
           headers: { Authorization: `Bearer ${token}` }
         })
         this.userProjects = response.data.projects
@@ -413,7 +420,7 @@ export default {
           return
         }
         const response = await axios.post(
-          'https://angel-fq3c.onrender.com/project',
+          'https://angel-fq3c.onrender.com/project', // remove https://...  if server run local
           { content: this.content },
           {
             headers: { Authorization: `bearer ${token}` }
@@ -453,7 +460,7 @@ export default {
           return
         }
         const response = await axios.delete(
-          `https://angel-fq3c.onrender.com/project/${projectId}`,
+          `https://angel-fq3c.onrender.com/project/${projectId}`, // remove https://...  if server run local
           {
             headers: { Authorization: `bearer ${token}` }
           }

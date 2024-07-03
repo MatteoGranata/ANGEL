@@ -72,7 +72,7 @@ export default {
       selectedFile: null,
       user: '',
       errorimage: '',
-      baseUrl: 'https://angel-fq3c.onrender.com/',
+      baseUrl: 'https://angel-fq3c.onrender.com/', // or baseUrl: 'http://localhost:yourport/' for local server
       currentPassword: '',
       newPassword: ''
     }
@@ -93,7 +93,7 @@ export default {
           console.error('No userId found')
           return
         }
-        const response = await axios.get(`https://angel-fq3c.onrender.com/users/${userId}`, {
+        const response = await axios.get(`https://angel-fq3c.onrender.com/users/${userId}`, { // remove https://...  if server run local
           headers: { Authorization: `bearer ${token}` }
         })
         this.user = response.data
@@ -128,7 +128,7 @@ export default {
           return
         }
         const response = await axios.post(
-          `https://angel-fq3c.onrender.com/users/${userId}/image`,
+          `https://angel-fq3c.onrender.com/users/${userId}/image`, // remove https://...  if server run local
           formData,
           {
             headers: {
