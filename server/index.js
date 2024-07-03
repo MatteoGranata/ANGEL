@@ -23,7 +23,7 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 
-dotenv.config();// Load environment variables from the `.env` file
+dotenv.config(); // Load environment variables from the `.env` file
 
 const PORT = process.env.PORT || 3000; // Get the port number from the environment variable (or default to 3000)
 
