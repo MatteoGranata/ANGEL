@@ -33,10 +33,10 @@ export default {
         localStorage.removeItem('token')
         localStorage.removeItem('username')
         this.token = null
-        this.$router.push('/')
+        this.$router.push('/')// Redirect to homepage after logout
       } catch (error) {
-        console.error('impossibile effettuare il logout:', error)
-      } // Redirect to login after logout
+        console.error(error)
+      } 
     }
   }
 }
