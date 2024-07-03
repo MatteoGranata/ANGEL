@@ -93,7 +93,8 @@ export default {
           console.error('No userId found')
           return
         }
-        const response = await axios.get(`https://angel-fq3c.onrender.com/users/${userId}`, { // remove https://...  if server run local
+        const response = await axios.get(`https://angel-fq3c.onrender.com/users/${userId}`, {
+          // remove https://...  if server run local
           headers: { Authorization: `bearer ${token}` }
         })
         this.user = response.data

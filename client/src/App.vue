@@ -33,10 +33,10 @@ export default {
         localStorage.removeItem('token')
         localStorage.removeItem('username')
         this.token = null
-        this.$router.push('/')// Redirect to homepage after logout
+        this.$router.push('/') // Redirect to homepage after logout
       } catch (error) {
         console.error(error)
-      } 
+      }
     }
   }
 }
