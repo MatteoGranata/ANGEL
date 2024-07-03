@@ -50,7 +50,7 @@ export const getProjectById = async (req, res) => {
 export const updateProject = async (req, res) => {
   const { id } = req.params;
 
-  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).json({ message: 'id non conforme con mongo' });
+  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).json({ message: 'id not compliant with mongo' });
   try {
     const project = await Project.findByIdAndUpdate(id, req.body, {
       new: true,
@@ -67,7 +67,7 @@ export const updateProject = async (req, res) => {
 export const deleteProject = async (req, res) => {
   const { id } = req.params;
 
-  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).json({ message: 'id non conforme con mongo' });
+  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).json({ message: 'id not compliant with mongo' });
   try {
     const project = await Project.findByIdAndDelete(id);
     if (!project) {

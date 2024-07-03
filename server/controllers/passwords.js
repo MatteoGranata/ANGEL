@@ -32,7 +32,7 @@ export const updatePassword = async (req, res) => {
   const { id } = req.params;
   const data = { ...req.body };
 
-  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).json({ message: 'id non conforme con mongo' });
+  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).json({ message: 'id not compliant with mongo' });
   try {
     const password = await Password.findByIdAndUpdate(id, data, { new: true });
     res.status(200).json({ password });
@@ -43,10 +43,10 @@ export const updatePassword = async (req, res) => {
 export const deletePassword = async (req, res) => {
   const { id } = req.params;
 
-  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).json({ message: 'id non conforme con mongo' });
+  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).json({ message: 'id not compliant with mongo' });
   try {
     await Password.findByIdAndDelete(id);
-    res.status(200).json({ message: 'password eliminata con successo' });
+    res.status(200).json({ message: 'Password deleted successfully' });
   } catch (error) {
     res.status(404).json({ message: error.message });
   }

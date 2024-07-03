@@ -5,7 +5,6 @@ const router = express.Router();
 
 router.post('/', createPassword);
 router.get('/', getAllPasswords);
-// router.get('/:id', getPostById);
 router.patch('/:id', updatePassword);
 router.delete('/:id', deletePassword);
 

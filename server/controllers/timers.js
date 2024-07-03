@@ -31,7 +31,7 @@ export const getTimer = async (req, res) => {
 export const updateTimer = async (req, res) => {
   const { id } = req.params;
   const data = { ...req.body };
-  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).json({ message: 'id non conforme con mongo' });
+  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).json({ message: 'id not compliant with mongo' });
   try {
     const timer = await Timer.findByIdAndUpdate(id, data, { new: true });
     res.status(200).json({ timer });
@@ -43,7 +43,7 @@ export const startTimer = async (req, res) => {
   const { id } = req.params;
   const data = { ...req.body };
 
-  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).json({ message: 'id non conforme con mongo' });
+  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).json({ message: 'id not compliant with mongo' });
   try {
     const timer = await Timer.findByIdAndUpdate(id, data, { new: true });
     res.status(200).json(timer);
@@ -54,7 +54,7 @@ export const startTimer = async (req, res) => {
 export const stopTimer = async (req, res) => {
   const { id } = req.params;
   const data = { ...req.body };
-  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).json({ message: 'id non conforme con mongo' });
+  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).json({ message: 'id not compliant with mongo' });
   try {
     const timer = await Timer.findByIdAndUpdate(id, data, { new: true });
     res.status(200).json(timer);
@@ -64,15 +64,14 @@ export const stopTimer = async (req, res) => {
 };
 export const resetTimer = async (req, res) => {
   const { id } = req.params;
-  //   const userId = req.res.userId;
   try {
     const timer = await Timer.findById(id);
     if (!timer) {
-      return res.status(404).send('Cronometro non trovato');
+      return res.status(404).send('timer not found');
     }
     timer.tempo = 0;
     await timer.save();
-    res.status(200).json({ message: 'timer resettato correttamente' });
+    res.status(200).json({ message: 'timer reset successfully' });
   } catch (error) {
     return res.status(409).json({ message: error.message });
   }
@@ -80,10 +79,10 @@ export const resetTimer = async (req, res) => {
 export const deleteTimer = async (req, res) => {
   const { id } = req.params;
 
-  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).json({ message: 'id non conforme con mongo' });
+  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).json({ message: 'id not compliant with mongo' });
   try {
     await Timer.findByIdAndDelete(id);
-    res.status(200).json({ message: 'timer eliminato con successo' });
+    res.status(200).json({ message: 'timer successfully deleted' });
   } catch (error) {
     res.status(404).json({ message: error.message });
   }

@@ -5,39 +5,39 @@ import jwt from 'jsonwebtoken';
 export const login = async (req, res) => {
   const { username, password } = req.body;
   const user = await User.findOne({ username });
-  if (!user) return res.status(404).json({ status: 'error', message: 'utente/password errata' });
+  if (!user) return res.status(404).json({ status: 'error', message: 'Incorrect user/password' });
   if (await bcryptjs.compare(password, user.password)) {
     const token = jwt.sign({ userId: user._id, username: user.username }, process.env.JWT_SECRET);
     return res.json({ status: 'ok', data: token.split(' ')[0], user: user });
   }
-  res.status(404).json({ status: 'error', message: 'utente/password non trovati' });
+  res.status(404).json({ status: 'error', message: 'Incorrect user/password' });
 };
 export const register = async (req, res) => {
   const { username, password, email } = req.body;
-  //  controllo username
+  //  username check
   if (!username || typeof username != 'string') {
-    return res.json({ status: 'error', message: 'username non valido' });
+    return res.json({ status: 'error', message: 'Invalid username' });
   }
-  // controllo pasword
+  // pasword check
   if (!password || typeof password != 'string') {
-    return res.json({ status: 'error', message: 'password non valida' });
+    return res.json({ status: 'error', message: 'Invalid password' });
   }
   if (password.length < 5) {
-    return res.json({ status: 'error', message: 'password troppo corta' });
+    return res.json({ status: 'error', message: 'password too short' });
   }
-  // controllo email
+  // email check
   if (!email || typeof email != 'string') {
-    return res.json({ status: 'error', message: 'email non valida' });
+    return res.json({ status: 'error', message: 'invalid email' });
   }
-  // Controllo se l'username esiste già
+  // Check if the username already exists
   const existingUser = await User.findOne({ username: username });
   if (existingUser) {
-    return res.status(409).json({ status: 'error', message: 'username occupato' });
+    return res.status(409).json({ status: 'error', message: 'username already used' });
   }
-  // Controllo se l'email esiste già
+  // Check if the email already exists
   const existingEmail = await User.findOne({ email: email });
   if (existingEmail) {
-    return res.status(409).json({ status: 'error', message: 'email già registrata' });
+    return res.status(409).json({ status: 'error', message: 'email already registered' });
   }
   const passwordHashed = await bcryptjs.hash(password, 10);
   const user = new User({
