@@ -105,7 +105,7 @@ Start the client
 
 **Client:** Vue3, TailwindCSS
 
-**Server:** Node, Express
+**Server:** Node, Express, MongoDB
 
 
 ## Authors
