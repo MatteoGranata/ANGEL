@@ -45,9 +45,10 @@
             </div>
             <button
               type="submit"
-              class="w-full hover:shadow-xl text-slate-800 bg-primary-600 hover:bg-ghost focus:ring focus:ring-slate-800 focus:outline-none font-bold rounded-lg text-lg px-5 py-2.5 text-center"
+              class="flex justify-center w-full hover:shadow-xl text-slate-800 bg-primary-600 hover:bg-ghost focus:ring focus:ring-slate-800 focus:outline-none font-bold rounded-lg text-lg px-5 py-2.5 text-center border"
             >
-              Sign in
+              <p v-if="loading == false">Sign in</p>
+              <div v-else class="loader"></div>
             </button>
             <p
               v-if="errorLogin"
@@ -75,11 +76,13 @@ export default {
     return {
       username: '',
       password: '',
-      errorLogin: ''
+      errorLogin: '',
+      loading: false
     }
   },
   methods: {
     async login() {
+      this.loading = true
       try {
         const response = await axios.post('https://angel-fq3c.onrender.com/auth/login', {
           username: this.username,
@@ -93,8 +96,43 @@ export default {
       } catch (error) {
         console.error(error)
         this.errorLogin = error.response.data.message
+      } finally {
+        this.loading = false
       }
     }
   }
 }
 </script>
+<style scoped>
+.loader {
+  width: 50px;
+  aspect-ratio: 1;
+  border: 7px solid #fff;
+  box-sizing: border-box;
+  background:
+    radial-gradient(farthest-side, #000 98%, #fff) 50%/10px 10px,
+    radial-gradient(farthest-side, #000 98%, #fff) 50%/10px 10px,
+    radial-gradient(farthest-side, #000 98%, #fff) 50%/10px 10px,
+    radial-gradient(farthest-side, #000 98%, #fff) 50%/10px 10px,
+    radial-gradient(farthest-side, #000 98%, #fff) 50%/10px 10px,
+    linear-gradient(#000 0 0) 50%/100% 5px,
+    linear-gradient(#000 0 0) 50%/5px 100%,
+    #fff;
+  background-repeat: no-repeat;
+  filter: blur(3px) contrast(10);
+  animation: l13 0.8s infinite;
+}
+
+@keyframes l13 {
+  100% {
+    background-position:
+      50% -10px,
+      -10px 50%,
+      62.5px 50%,
+      50% 62.5px,
+      50%,
+      50%,
+      50%;
+  }
+}
+</style>

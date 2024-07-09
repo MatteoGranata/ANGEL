@@ -55,9 +55,10 @@
             </div>
             <button
               type="submit"
-              class="w-full hover:shadow-xl text-slate-800 bg-primary-600 hover:bg-ghost focus:ring focus:ring-slate-800 focus:outline-none font-bold rounded-lg text-lg px-5 py-2.5 text-center"
+              class="flex justify-center w-full hover:shadow-xl text-slate-800 bg-primary-600 hover:bg-ghost focus:ring focus:ring-slate-800 focus:outline-none font-bold rounded-lg text-lg px-5 py-2.5 text-center"
             >
-              Create an account
+              <p v-if="loading == false">Register</p>
+              <div v-else class="loader"></div>
             </button>
             <p
               v-if="errorRegister"
@@ -86,11 +87,13 @@ export default {
       username: '',
       password: '',
       email: '',
-      errorRegister: ''
+      errorRegister: '',
+      loading: false
     }
   },
   methods: {
     async register() {
+      this.loading = true
       try {
         const response = await axios.post('https://angel-fq3c.onrender.com/auth/register', {
           username: this.username,
@@ -105,8 +108,57 @@ export default {
       } catch (error) {
         console.error(error)
         this.errorRegister = error.response.data.message
+      } finally {
+        this.loading = false
       }
     }
   }
 }
 </script>
+
+<style scoped>
+.loader {
+  width: 100px;
+  height: 80px;
+  padding: 8px;
+  box-sizing: border-box;
+  display: grid;
+  background: #f8f8ff;
+  filter: blur(4px) contrast(10) hue-rotate(240deg);
+  mix-blend-mode: luminosity;
+}
+.loader:before {
+  content: '';
+  grid-area: 1/1;
+  margin: 28px 0;
+  border-radius: 100px;
+  background: #1e293b;
+}
+.loader:after {
+  content: '';
+  grid-area: 1/1;
+  height: 20px;
+  width: 20px;
+  margin: auto;
+  border-radius: 50%;
+  background: #1e293b;
+  animation: l5 2s infinite linear;
+}
+@keyframes l5 {
+  0% {
+    transform: translate(30px);
+  }
+  25% {
+    transform: translate(0);
+  }
+  50% {
+    transform: translate(-30px);
+  }
+  75% {
+    transform: translate(0);
+  }
+  100% {
+    transform: translate(30px);
+  }
+}
+</style>
