@@ -18,13 +18,12 @@
         alt="Immagine Profilo"
         class="w-32 h-32 lg:w-60 lg:h-60 rounded-full object-cover ring ring-snow/70 drop-shadow-xl"
       />
-      <div
+      <img
         v-else
-        class="w-32 h-32 lg:w-60 lg:h-60 rounded-full bg-gray-300 text-slate-800 flex items-center justify-center"
-      >
-        <i class="fas fa-user text-2xl"></i>
-      </div>
-
+        :src="`https://picsum.photos/200`"
+        alt="Immagine Profilo"
+        class="w-32 h-32 lg:w-60 lg:h-60 rounded-full object-cover ring ring-snow/70 drop-shadow-xl"
+      />
       <div
         class="flex flex-col relative -top-10 left-14 lg:absolute sm:left-32 lg:left-48 lg:top-60 items-start justify-between"
       >
@@ -42,7 +41,6 @@
           {{ errorimage }}
         </p>
       </div>
-
       <div class="lg:ml-4 mt-10 w-full lg:w-fit">
         <div class="bg-ghost rounded-xl px-4 py-1 drop-shadow-3xl">
           <p class="text-sm w-fit rounded-lg text-slate-800 text-start relative top-1.5">

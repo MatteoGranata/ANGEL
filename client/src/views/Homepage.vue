@@ -20,12 +20,16 @@
           :src="`${baseUrl}${user.avatar}`"
           alt="User"
         />
-        <div
+        <img
           v-else
-          class="w-10 h-10 lg:w-16 lg:h-16 rounded-full bg-gray-300 text-gray-500 flex items-center justify-center shadow-lg"
-        >
-          <i class="fas fa-user text-2xl"></i>
-        </div>
+          id="avatarButton"
+          type="button"
+          data-dropdown-toggle="userDropdown"
+          data-dropdown-placement="bottom-start"
+          class="w-11 h-11 lg:w-16 lg:h-16 rounded-full cursor-pointer object-cover shadow-lg ring-1 lg:ring-2 ring-snow/70"
+          :src="`https://picsum.photos/200`"
+          alt="User"
+        />
         <div
           v-if="showDropdown"
           id="userDropdown"
