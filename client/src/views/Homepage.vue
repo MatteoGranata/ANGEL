@@ -150,6 +150,11 @@
               </div>
             </div>
           </li>
+          <div v-if="allPostsUnpinned" class="w-full h-[47vh] flex items-end justify-center">
+            <p class="relative left-1/2 w-fit h-fit text-center text-sm text-slate-400">
+              YOUR PINNED POSTS WILL APPEAR HERE
+            </p>
+          </div>
         </ul>
         <!-- Password section -->
         <ul
@@ -227,6 +232,11 @@
               </div>
             </div>
           </li>
+          <div v-if="allPasswordUnpinned" class="w-full h-[47vh] flex items-end justify-center">
+            <p class="relative left-1/2 w-fit h-fit text-center text-sm text-slate-400">
+              YOUR PINNED PASSWORDS WILL APPEAR HERE
+            </p>
+          </div>
         </ul>
       </div>
     </div>
@@ -254,6 +264,14 @@ export default {
     this.fetchProject()
     this.fetchUser()
     this.getToken()
+  },
+  computed: {
+    allPostsUnpinned() {
+      return this.userPostsPinned.every((post) => post.pin === false)
+    },
+    allPasswordUnpinned() {
+      return this.userPasswordsPinned.every((password) => password.pin === false)
+    }
   },
   methods: {
     async getToken() {
