@@ -2,10 +2,7 @@
 
 Angel is a web app designed to help you manage your time, activities, finances, and project information efficiently and organized. With Angel, you can create projects that bundle various essential features to enhance your productivity.
 
-
-
-
-
+![App Screenshot](https://i.postimg.cc/d00k3fbX/Angel-screenshot.png)
 
 ## Demo
 
