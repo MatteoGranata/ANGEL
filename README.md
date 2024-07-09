@@ -107,6 +107,9 @@ Start the client
 
 **Server:** Node, Express, MongoDB
 
+**Loaders** [CSS Loaders](https://css-loaders.com/)
+
+**icons** [icons8](https://icons8.it/icons)
 
 ## Authors
 
