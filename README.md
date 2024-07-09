@@ -106,9 +106,9 @@ Start the client
 
 **Loaders:** [CSS Loaders](https://css-loaders.com/)
 
-**icons:** [icons8](https://icons8.it/icons), [@MatteoGranata](https://www.github.com/MatteoGranata)
+**Icons:** [icons8](https://icons8.it/icons), [@MatteoGranata](https://www.github.com/MatteoGranata)
 
-**initial avatar images:** [Lorem Picsum](https://picsum.photos/)
+**Initial avatar images:** [Lorem Picsum](https://picsum.photos/)
 
 ## Authors
 
