@@ -4,7 +4,7 @@
       class="flex w-full h-full items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0"
     >
       <div class="w-full bg-ghost rounded-lg shadow-lg md:mt-0 sm:max-w-md xl:p-0">
-        <div class="px-5 pt-4 pb-2 space-y-4 md:space-y-6 drop-shadow-3xl">
+        <div class="px-5 pt-4 pb-2 space-y-4 md:space-y-6">
           <router-link to="/" class="flex p-1 w-fit">
             <img
               width="25"
@@ -55,7 +55,7 @@
             </div>
             <button
               type="submit"
-              class="flex justify-center w-full hover:shadow-xl text-slate-800 bg-primary-600 hover:bg-ghost focus:ring focus:ring-slate-800 focus:outline-none font-bold rounded-lg text-lg px-5 py-2.5 text-center"
+              class="flex justify-center items-center h-12 w-full hover:drop-shadow-3xl text-slate-800 bg-ghost focus:ring focus:ring-slate-800 focus:outline-none font-bold rounded-lg text-lg px-5 py-2.5 text-center border"
             >
               <p v-if="loading == false">Register</p>
               <div v-else class="loader"></div>
@@ -115,50 +115,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.loader {
-  width: 100px;
-  height: 80px;
-  padding: 8px;
-  box-sizing: border-box;
-  display: grid;
-  background: #f8f8ff;
-  filter: blur(4px) contrast(10) hue-rotate(240deg);
-  mix-blend-mode: luminosity;
-}
-.loader:before {
-  content: '';
-  grid-area: 1/1;
-  margin: 28px 0;
-  border-radius: 100px;
-  background: #1e293b;
-}
-.loader:after {
-  content: '';
-  grid-area: 1/1;
-  height: 20px;
-  width: 20px;
-  margin: auto;
-  border-radius: 50%;
-  background: #1e293b;
-  animation: l5 2s infinite linear;
-}
-@keyframes l5 {
-  0% {
-    transform: translate(30px);
-  }
-  25% {
-    transform: translate(0);
-  }
-  50% {
-    transform: translate(-30px);
-  }
-  75% {
-    transform: translate(0);
-  }
-  100% {
-    transform: translate(30px);
-  }
-}
-</style>
