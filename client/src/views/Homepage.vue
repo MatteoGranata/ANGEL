@@ -154,8 +154,13 @@
               </div>
             </div>
           </li>
-          <div v-if="allPostsUnpinned" class="w-full h-[47vh] flex items-end justify-center">
-            <p class="relative left-1/2 w-fit h-fit text-center text-sm text-slate-400">
+          <div
+            v-if="allPostsUnpinned"
+            class="w-full h-[47vh] sm:h-[85vh] flex items-end sm:items-center justify-center border"
+          >
+            <p
+              class="relative left-1/2 sm:left-0 xl:left-1/2 w-fit h-fit text-center text-sm text-slate-400"
+            >
               YOUR PINNED POSTS WILL APPEAR HERE
             </p>
           </div>
@@ -236,8 +241,13 @@
               </div>
             </div>
           </li>
-          <div v-if="allPasswordUnpinned" class="w-full h-[47vh] flex items-end justify-center">
-            <p class="relative left-1/2 w-fit h-fit text-center text-sm text-slate-400">
+          <div
+            v-if="allPasswordUnpinned"
+            class="w-full h-[47vh] sm:h-[85vh] flex items-end sm:items-center justify-center border"
+          >
+            <p
+              class="relative left-1/2 sm:left-0 lg:left-1/2 w-fit h-fit text-center text-sm text-slate-400"
+            >
               YOUR PINNED PASSWORDS WILL APPEAR HERE
             </p>
           </div>
