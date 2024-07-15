@@ -156,7 +156,7 @@
           </li>
           <div
             v-if="allPostsUnpinned"
-            class="w-full h-[47vh] sm:h-[85vh] flex items-end sm:items-center justify-center border"
+            class="w-full h-[47vh] sm:h-[85vh] flex items-end sm:items-center justify-center"
           >
             <p
               class="relative left-1/2 sm:left-0 xl:left-1/2 w-fit h-fit text-center text-sm text-slate-400"
@@ -243,7 +243,7 @@
           </li>
           <div
             v-if="allPasswordUnpinned"
-            class="w-full h-[47vh] sm:h-[85vh] flex items-end sm:items-center justify-center border"
+            class="w-full h-[47vh] sm:h-[85vh] flex items-end sm:items-center justify-center"
           >
             <p
               class="relative left-1/2 sm:left-0 lg:left-1/2 w-fit h-fit text-center text-sm text-slate-400"
