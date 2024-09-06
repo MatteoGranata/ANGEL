@@ -119,10 +119,11 @@
               reach.
             </p>
             <p v-if="currentImage === 'project'" class="m-1">
-              When you log into the Angel, you will immediately see the homepage. Here you will find an overview of
-              your projects, notes, and passwords. The homepage is designed to give you easy and quick access to the
-              main information. You can create new projects or access existing ones. Each project groups together
-              various features that will help you better manage your time and activities.
+              When you log into the Angel, you will immediately see the homepage. Here you will find
+              an overview of your projects, notes, and passwords. The homepage is designed to give
+              you easy and quick access to the main information. You can create new projects or
+              access existing ones. Each project groups together various features that will help you
+              better manage your time and activities.
             </p>
           </div>
           <div class="w-full px-1 sm:w-[90vw] xl:w-[60vw] mt-5 drop-shadow-3xl">
