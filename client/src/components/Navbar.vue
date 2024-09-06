@@ -15,7 +15,7 @@
         <router-link
           to="/register"
           class="bg-slate-800 text-ghost rounded-md pt-0.5 sm:pt-1 px-1.5 hover:bg-slate-900"
-          >Get Starter</router-link
+          >Get Started</router-link
         >
       </div>
     </div>
