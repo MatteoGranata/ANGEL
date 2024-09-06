@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import { Project } from '../models/project.js';
 
 export const authenticateToken = (req, res, next) => {
   // Extract the authorization token from the headers
@@ -14,5 +15,24 @@ export const authenticateToken = (req, res, next) => {
     next();
   } catch (error) {
     res.status(401).json({ error: 'Token non valido' });
+  }
+};
+
+export const authorizeUser = async (req, res, next) => {
+  try {
+    const projectId = req.params.id; // Get the project ID from the URL parameters
+    const project = await Project.findById(projectId); // Fetch the project from the database
+
+    if (!project) {
+      return res.status(404).json({ message: 'Project not found' }); // Return 404 if the project doesn't exist
+    }
+
+    if (project.userId.toString() !== req.user.userId) {
+      return res.status(403).json({ message: 'Not authorized to modify this project' }); // Return 403 if the user is not authorized
+    }
+
+    next(); // Proceed to the next middleware if authorized
+  } catch (error) {
+    res.status(500).json({ error: 'Server error' }); // Handle server errors
   }
 };
